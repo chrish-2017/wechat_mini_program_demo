@@ -1,0 +1,45 @@
+<view class="container">
+    <view class="trans-info">
+        <view class="goods-info">
+            <image src="{{goodsIcon}}"></image>
+            <view class="overlay">2件商品</view>
+        </view>
+        <view class="company-info">
+            <view>物流状态: 运输中</view>
+            <view>快递公司:顺丰速递</view>
+            <view>快递编号:123456789</view>
+        </view>
+    </view>
+
+    <view class="trans-detail">
+        <view class="trans-line"></view>
+        <view class="trans-item">
+            <view class='dot'></view>
+            <view>
+                <view>快件在【成都双流集散中心】已装车</view><!-- ，准备发往【成都市高新区天泰路营业点】 -->
+                <view>2017-02-20 13:31:20</view>
+            </view>
+        </view>
+        <view class="trans-item">
+            <view class='dot'></view>
+            <view>
+                <view>快件到达【成都双流集散中心】</view>
+                <view>2017-02-20 13:31:20</view>
+            </view>
+        </view>
+        <view class="trans-item">
+            <view class='dot'></view>
+            <view>
+                <view>快件在【成都双流集散中心】已装车</view><!-- ，准备发往【成都市高新区天泰路营业点】 -->
+                <view>2017-02-20 13:31:20</view>
+            </view>
+        </view>
+        <view class="trans-item">
+            <view class='dot'></view>
+            <view>
+                <view>快件到达【成都双流集散中心】</view>
+                <view>2017-02-20 13:31:20</view>
+            </view>
+        </view>
+    </view>
+</view>

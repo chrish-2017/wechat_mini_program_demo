@@ -1,0 +1,70 @@
+
+<!--index.wxml-->
+<view class="container">
+  <view class="head">
+    <view class="hd_title">
+      <image src="../../images/title.png" class="hd_title_img" mode="scaleToFill"></image>
+      <text class="tx1 padd_left">Load Information</text>
+    </view>
+    <view class="hd_content">
+      <view class="item">
+          <view class="no">
+              Load No.
+          </view>
+          <view class="start">
+              Transport Start
+          </view>
+          <view class="end">
+              Transport End
+          </view>
+      </view>
+    </view>
+    <view class="hd_content loadInfo">
+      <block wx:for="{{load}}">
+          <view class="item">
+              <view class="no">
+                  <text class="blue">{{item.no}}</text>
+              </view>
+              <view class="start">
+                  <text class="blue">{{item.startTime}}</text>
+              </view>
+              <view class="end">
+                  <text class="blue">{{item.endTime}}</text>
+              </view>
+          </view>
+      </block>
+    </view>
+    <view class="status">
+      <view class="status_rg" >
+        <text>Transport Order(s) Status</text>
+        <image src="../../images/arrow_right.png" mode="scaleToFill" class="img_status"></image>
+      </view>
+    </view>
+  </view>
+  <view class="body">
+    <view class="bd_item border_r border_b" data-id="pu">
+      <image class="bd_img" src="../../images/pickup.png" mode="scaleToFill"></image>
+      <text class="bd_txt bd_txt_name">Pick up</text>
+      <text class="bd_txt bd_txt_no"></text>
+    </view>
+    <view class="bd_item border_b" data-id="de">
+      <image class="bd_img" src="../../images/deliver.png" mode="scaleToFill"></image>
+      <text class="bd_txt bd_txt_name">Deliver</text>
+      <text class="bd_txt bd_txt_no"></text>
+    </view>
+    <view class="bd_item border_r" data-id="delay">
+      <image class="bd_img" src="../../images/delay.png" mode="scaleToFill"></image>
+      <text class="bd_txt bd_txt_name">Delay</text>
+      <text class="bd_txt bd_txt_no"></text>
+    </view>
+    <view class="bd_item border_lt" data-id="da">
+      <image class="bd_img" src="../../images/damage.png" mode="scaleToFill"></image>
+      <text class="bd_txt bd_txt_name">Damage</text>
+      <text class="bd_txt bd_txt_no"></text>
+    </view>
+  </view>
+  <view class="footer" bindtap="disconnet">
+    <image src="../../images/footer.png" class="img" mode="scaleToFill"></image>
+    <text class="">Disconnet Load</text>
+  </view>
+</view>

@@ -1,0 +1,17 @@
+.container{
+    padding: 20rpx;
+}
+.addr-form{
+    width: 100%;
+}
+form input, form picker{
+    height: 100rpx;
+    line-height: 100rpx;
+    border-bottom: 1px solid #e5e5e5;
+}
+.addr-default{  
+    height: 100rpx;
+    display: flex;
+    flex-direction: row; /**横向排列**/
+    align-items: center; /**居中**/
+}

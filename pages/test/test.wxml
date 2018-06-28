@@ -1,0 +1,38 @@
+<!--pages/test/test.wxml-->
+<view class="container">
+    <view class="msg-text">
+        <image class="logo" src="{{logo}}"></image>
+        <text class="msg">{{welcomeMsg}}<text class=""></text></text>
+    </view>
+    <view class="msg-url">
+        <view class="title">装载信息通知</view>
+        <view class="date">{{inform.date}}</view>
+        <view class="detail">
+            <view>
+                装载单号：<text class="blue">{{inform.load.no}}</text>
+            </view>
+            <view>
+                运输开始：<text class="blue">{{inform.load.startTime}}</text>
+            </view>
+            <view>
+                运输结束：<text class="blue">{{inform.load.endTime}}</text>
+            </view>
+        </view>
+        <view>运单数量：{{inform.load.num}}</view>
+        <view class="blue border-bottom">请点击此处进行运单操作</view>
+        <view class="blue">详情</view>
+    </view>
+    <view class="msg-text">
+        <image class="logo" src="{{logo}}"></image>
+        <text class="msg">{{gpsUploadMsg}}<text class=""></text></text>
+    </view>
+    <view class="msg-text">
+        <image class="logo" src="{{logo}}"></image>
+        <text class="msg">{{scanFailMsg}}<text class=""></text></text>
+    </view>
+    <view class="menu-bar">
+        <view>扫码/Scan</view>
+        <view class="border-right"></view>
+        <view>帮助/Help</view>
+    </view>
+</view>

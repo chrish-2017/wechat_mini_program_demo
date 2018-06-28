@@ -1,0 +1,68 @@
+<view class="container">
+    <view class="user-info">
+        <image src="{{userInfo.avatarUrl}}"></image>
+        <text>{{userInfo.nickName}}</text>
+    </view>
+
+    <view class="nav">
+        <view class="{{mainView == 1 ? 'nav-item-active' : ''}}" data-view="1" bindtap="bindNavItem">我的订单</view>
+        <view class="{{mainView == 2 ? 'nav-item-active' : ''}}" data-view="2" bindtap="bindNavItem">地址管理</view>
+    </view>
+
+    <view class="content">
+        <view wx:if="{{mainView == 1}}">
+            <view class="noOrder" wx:if="{{orderList.length == 0}}">
+                你还没有订单，快<view class="toOrder" bindtap="bindToIndex">去下单</view>吧
+            </view>
+            <view class="order-list" wx:else>
+                <block wx:for="{{orderList}}">
+                    <view class="order-item">
+                        <view class="order-info">
+                            <text>订单编号 {{item.number}}</text>
+                            <text>{{item.status}}</text>
+                        </view>
+                        <view class="order-detail">
+                            <image src="{{item.picUrl}}"/>
+                            <view class="order-des">
+                                <view bindtap="bindToDetail">{{item.name}}</view>
+                                <text>{{item.tag}}</text>
+                                <view class="number">
+                                    <text>￥{{item.price}}</text>
+                                    <text>×{{item.num}}</text>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="order-total">
+                            <text>共计{{item.num}}件商品 合计：￥{{item.count}}</text>
+                        </view>
+                        <view class="menu-bar">
+                            <button wx:if="{{item.status != '已收货'}}" bindtap="bindCancelOrder">取消订单</button>
+                            <button bindtap="bindCheckTransInfo">查看物流</button>
+                            <button type="warn" wx:if="{{item.status != '已收货'}}" bindtap="bindConfirmOrder">确认收货</button>
+                            <button type="warn" bindtap="bindApplyRefund">申请退货</button>
+                        </view>
+                    </view>
+                </block>
+            </view>
+        </view>
+        <view wx:if="{{mainView == 2}}">
+            <block wx:for="{{addrList}}">
+                <view class="addr-item">
+                    <image class="checkbox-icon" src="{{item.check == 1 ? selectedCheckboxIcon : checkboxIcon}}" data-index="{{index}}" bindtap="bindCheckbox"></image>
+                    <view class="addr-info">
+                        <view>
+                            <text>{{item.name}}</text>
+                            <text>{{item.number}}</text>
+                        </view>
+                        <view>{{item.addr}}</view>
+                    </view>
+                    <image class="edit-icon" src="{{editIcon}}" bindtap="bindToAddr"></image>
+                </view>
+            </block>
+            <view class="addr-add" bindtap="bindToAddr">
+                <image class="add-icon" src="{{addIcon}}"/>
+                <text>添加地址</text>
+            </view>
+        </view>
+    </view>
+</view>

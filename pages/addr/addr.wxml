@@ -1,0 +1,32 @@
+<view class="container">
+    <view class="addr-form">
+        <form bindsubmit="addrFormSubmit">
+            <input placeholder="收货人姓名" name="username"/>
+            <input placeholder="电话号码" type="number" name="number"/>
+            <picker bindchange="bindProChange" disabled="{{proArray.length <= 1}}" value="{{proIndex}}" range-key="name" range="{{proArray}}">
+                <view class="picker">
+                    选择省份：{{proArray[proIndex].name}}
+                    <input name="pro" hidden value="{{proArray[proIndex].name}}"/>
+                </view>
+            </picker>
+            <picker bindchange="bindCityChange" disabled="{{cityArray.length <= 1}}" value="{{cityIndex}}" range-key="name" range="{{cityArray}}">
+                <view class="picker">
+                    当前城市：{{cityArray[cityIndex].name}}
+                    <input name="city" hidden value="{{cityArray[cityIndex].name}}"/>
+                </view>
+            </picker>
+            <picker bindchange="bindAreaChange" disabled="{{areaArray.length <= 1}}" value="{{areaIndex}}" range-key="name" range="{{areaArray}}">
+                <view class="picker">
+                    当前地区：{{areaArray[areaIndex].name}}
+                    <input name="area" hidden value="{{areaArray[areaIndex].name}}"/>
+                </view>
+            </picker>
+            <input placeholder="详细地址" name="addr"/>
+            <view class="addr-default">
+                <image class="checkbox-icon" src="{{checked == 1 ? selectedCheckboxIcon : checkboxIcon}}" bindtap="bindCheckbox"></image>
+                设置为默认地址
+            </view>
+            <button type="warn" formType="submit">保存地址</button>
+        </form>
+    </view>
+</view>

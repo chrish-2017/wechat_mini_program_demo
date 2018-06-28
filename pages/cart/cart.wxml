@@ -1,0 +1,37 @@
+<view class="container">
+    <view class="noGoods" wx:if="{{goodsList.length == 0}}">
+        <view>你的购物车没有商品</view>
+        <view>快去挑选吧</view>
+        <button type="warn" bindtap="bindToIndex">去挑选</button>
+    </view>
+
+    <view class="goods-list" wx:else>
+        <block wx:for="{{goodsList}}">
+            <view class="goods-item">
+                <image class="checkbox-icon" src="{{item.selected == 1 ? selectedCheckboxIcon : checkboxIcon}}" data-index="{{index}}" bindtap="bindCheckbox"></image>
+                <image class="goods-pic" src="{{item.picUrl}}"/>
+                <view class="goods-des" bindtap="bindToDetail" data-mainView="2">
+                    <text>{{item.name}}</text>
+                    <text>{{item.tag}}</text>
+                    <text>￥ {{item.price}}</text>
+                </view>
+                <view class="goods-num">
+                    <image class="minus-icon" src="{{minusIcon}}" data-index="{{index}}" bindtap="bindMinusIcon"/>
+                    <text class="number">{{item.num}}</text>
+                    <image class="add-icon" src="{{addIcon}}" data-index="{{index}}" bindtap="bindAddIcon"></image>
+                </view>
+                <image class="del-icon" src="{{deleteIcon}}" data-index="{{index}}" bindtap="bindDelIcon"/>
+            </view>
+        </block>
+
+        <view class="menu-bar">
+            <view class="select-all">
+                <image class="checkbox-icon" src="{{selectedAllStatus == 1 ? selectedCheckboxIcon : checkboxIcon}}" data-index="{{index}}" bindtap="bindSelectAll"></image> 全选
+            </view>
+            <view>
+                合计: ￥ {{totalPrice}}  
+            </view> 
+            <button type="warn" bindtap="bindToPay">结算</button>
+        </view>
+    </view>
+</view>

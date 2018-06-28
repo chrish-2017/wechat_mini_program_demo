@@ -1,0 +1,105 @@
+.user-info {
+  width: 100%;
+  display: flex;
+  flex-direction: row; /**横向排列**/
+  align-items: center; /**居中**/
+  padding: 20rpx 0;
+  font-size: 38rpx;
+  border-top: 1px solid #e5e5e5;
+}
+.user-info image{
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 50%;
+  border:1px solid #e5e5e5;
+  margin: 0 40rpx;
+}
+.nav{
+  width: 100%;
+  display: flex;
+  flex-direction: row; /**横向排列**/
+  justify-content: space-around; /**撑开居中**/
+  padding: 20rpx 30rpx;
+  border-bottom: 1px solid #eee;
+}
+.nav .nav-item-active{
+  color: #f44336;
+  border-bottom: 2px solid;
+}
+.content{
+  width: 100%;
+}
+.noOrder{
+  text-align: center;
+  padding-top: 30%;
+}
+.toOrder{
+  display: inline;
+  color: #f44336;
+  text-decoration: underline;
+}
+.order-list{
+  width: 100%;
+}
+.order-item{
+  padding: 0 30rpx 30rpx;
+}
+.order-info{
+  display: flex;
+  flex-direction: row; /**横向排列**/
+  justify-content: space-between; /**撑开**/
+  padding: 20rpx 0;
+}
+.order-detail{
+  display: flex;
+  flex-direction: row; /**横向排列**/
+  position: relative;
+}
+.order-detail image{
+  width: 140rpx;
+  height: 140rpx;
+  margin-right:20rpx;
+}
+.order-detail .order-des{
+  width: calc(100% - 160rpx);
+  display: flex;
+  flex-direction: column; /**竖向排列**/
+  justify-content: space-between; /**撑开**/
+}
+.order-detail .number{
+  display: flex;
+  flex-direction: row; /**横向排列**/
+  justify-content: space-between; /**撑开**/
+}
+.order-total, .menu-bar{
+  width: 100%;
+  display: flex;
+  flex-direction: row; /**横向排列**/
+  justify-content: flex-end; /**末尾**/
+}
+.menu-bar button{
+  font-size: 24rpx;
+  padding-top: 8rpx;
+  padding-bottom: 8rpx;
+  margin-right: 0;
+  margin-left: 20rpx;
+  border-radius: 5rpx;
+}
+.addr-item{
+  display: flex;
+  flex-direction: row; /**横向排列**/
+  justify-content: space-between; /**撑开**/
+  align-items: center; /**居中**/
+  padding: 20rpx 30rpx;
+  border-bottom: 1px solid #e5e5e5;
+}
+.addr-info{
+  width: calc(100% - 150rpx);
+}
+.addr-add{
+  height: 120rpx;
+  display: flex;
+  flex-direction: row; /**横向排列**/
+  justify-content: center; /**居中**/
+  align-items: center; /**居中**/
+}

@@ -1,0 +1,13 @@
+<view class="container">
+  <view class="goods-list">
+    <block wx:for="{{goodsInfo}}">
+      <view class="goods-item" bindtap="bindGoodsItem">
+        <image src="{{item.url}}"></image>
+        <view class="goods-des">
+          <text>{{item.des}}</text>
+          <text>{{item.price}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

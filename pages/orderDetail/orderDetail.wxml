@@ -1,0 +1,56 @@
+<view class="container">
+    <view class="addr-info">
+        <text>{{addrInfo.name}}</text>
+        <text>{{addrInfo.addr}}</text>
+    </view>
+
+    <view class="order-list">
+        <block wx:for="{{orderList}}">
+            <view class="order-item">
+                <view class="order-info">
+                    <text>订单编号 {{item.number}}</text>
+                    <text>{{item.status}}</text>
+                </view>
+                <view class="order-detail">
+                    <image src="{{item.picUrl}}"/>
+                    <view class="order-des">
+                        <view bindtap="bindToDetail">{{item.name}}</view>
+                        <text>{{item.tag}}</text>
+                        <text>￥{{item.price}}</text>
+                    </view>
+                    <button class="refund-btn" bindtap="bindRefund">退款</button>
+                </view>
+                <view class="order-total">
+                    <text>共计{{item.num}}件商品 合计：￥{{item.count}}</text>
+                </view>
+                <view class="order-fare">
+                    <text>运费:￥12.00</text>
+                </view>
+                <view class="order-all">
+                    <text class="fw">总计</text>
+                    <text class="red fw">￥{{item.count}}</text>
+                </view>
+            </view>
+        </block>
+    </view>
+
+    <view class="order-time">
+        <view>
+            <text>下单时间</text>
+            <text>2017-02-15 14:00</text>
+        </view>
+        <view class="order-extra">
+            <text>卖家发货时间</text>
+            <text>2017-02-15 14:00</text>
+        </view>
+        <view class="order-extra">
+            <text>买家自动收货时间</text>
+            <text>2017-02-15 14:00</text>
+        </view>
+    </view>
+
+    <view class="menu-bar">
+        <button bindtap="bindCheckTransInfo">查看物流</button>
+        <button type="warn" bindtap="bindConfirmOrder">确认收货</button>
+    </view>
+</view>

@@ -1,0 +1,65 @@
+.noGoods{ 
+    text-align: center;
+    padding: 50% 15rpx;
+}
+.noGoods button{
+    font-size: 28rpx;
+    margin-top:20rpx;
+}
+.goods-list{
+    width: 100%;
+}
+.goods-item{
+    display: flex;
+    flex-direction: row; /**横向排列**/
+    align-items: center; /**居中**/
+    padding:20rpx;
+    position: relative;
+}
+.goods-item .goods-pic{
+    width: 160rpx;
+    height: 160rpx;
+    margin:0 15rpx;
+}
+.goods-item .goods-des{
+    height: 160rpx;
+    display: flex;
+    flex-direction: column; /**竖向排列**/
+    justify-content: space-between; /**撑开**/
+}
+.goods-item .goods-num{
+    display: flex;
+    flex-direction: row; /**横向排列**/
+    align-items: center; /**居中**/
+    position: absolute;
+    bottom: 20rpx;
+    right: 20rpx;
+}
+.goods-num .number{
+    margin: 0 40rpx;
+}
+.goods-item .del-icon{
+    position: absolute;
+    top: 20rpx;
+    right: 20rpx;
+}
+.menu-bar{
+    width: 100%;
+    display: flex;
+    flex-direction: row; /**横向排列**/
+    justify-content: space-between; /**撑开**/
+    align-items: center; /**居中**/
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+.menu-bar .select-all{
+    display: flex;
+    margin-left: 20rpx;
+}
+.menu-bar button{
+    margin: 0;
+    border-radius: 0;
+    font-size: 28rpx;
+    padding:10rpx 80rpx;
+}

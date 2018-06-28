@@ -1,0 +1,57 @@
+.container{
+    padding: 20rpx;
+}
+.trans-info{
+    width: 100%;
+    display: flex;
+    flex-direction: row; /**横向排列**/
+}
+.goods-info{
+    height: 150rpx;
+    position: relative;
+    margin-right: 20rpx;
+}
+.goods-info image{
+    width: 150rpx;
+    height: 150rpx;
+}
+.goods-info .overlay{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    text-align: center;
+}
+.company-info{
+    display: flex;
+    flex-direction: column; /**竖向排列**/
+    justify-content: space-between; /**撑开**/
+}
+.trans-detail{
+    width: 100%;
+    margin-top: 50rpx;
+    position: relative;
+}
+.trans-line{
+    width: 3rpx;
+    height: calc(100% - 100rpx);
+    background: #ddd;
+    position: absolute;
+    left: 12.5rpx;
+    top: 6rpx;
+}
+.trans-item{
+    display: flex;
+    flex-direction: row; /**横向排列**/
+    align-items:baseline; /**基线**/
+    margin-bottom: 30rpx;
+}
+.trans-item .dot{
+    width: 25rpx;
+    height: 25rpx;
+    border-radius: 50%;
+    background: #ccc;
+    margin-right: 30rpx;
+    z-index: 1;
+}

@@ -1,0 +1,33 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="carousel">
+    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <block wx:for="{{carouselImages}}">
+        <swiper-item>
+          <image src="{{item}}" class="carousel-image" width="355" height="150"/>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+  <view class="category">
+    <block wx:for="{{categoryInfos}}">
+      <view class="category-item" bindtap="bindCategoryItem">
+        <image src="{{item.url}}"></image>
+        <text>{{item.des}}</text>
+      </view>
+    </block>
+  </view>
+
+  <view class="goods-list">
+    <block wx:for="{{goodsInfo}}">
+      <view class="goods-item" bindtap="bindGoodsItem">
+        <image src="{{item.url}}"></image>
+        <view class="goods-des">
+          <text>{{item.des}}</text>
+          <text>{{item.price}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

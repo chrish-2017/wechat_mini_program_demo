@@ -1,0 +1,52 @@
+<!--pages/test/test.wxml-->
+<view class="container">
+    <view class="msg-text">
+        <image class="logo" src="{{logo}}"></image>
+        <text class="msg">{{welcomeMsg}}<text class=""></text></text>
+    </view>
+    <view class="msg-url">
+        <view class="title">装载信息通知</view>
+        <view class="date">{{inform.date}}</view>
+        <view class="detail" bindtap="toDetail">
+            <view class="item">
+                <view class="no">
+                    Load No.
+                </view>
+                <view class="start">
+                    Transport Start
+                </view>
+                <view class="end">
+                    Transport End
+                </view>
+            </view>
+            <block wx:for="{{inform.load}}">
+                <view class="item">
+                    <view class="no">
+                        <text class="blue">{{item.no}}</text>
+                    </view>
+                    <view class="start">
+                        <text class="blue">{{item.startTime}}</text>
+                    </view>
+                    <view class="end">
+                        <text class="blue">{{item.endTime}}</text>
+                    </view>
+                </view>
+            </block>
+        </view>
+        <view class="blue border-bottom">请点击此处进行运单操作</view>
+        <view class="blue">详情</view>
+    </view>
+    <view class="msg-text">
+        <image class="logo" src="{{logo}}"></image>
+        <text class="msg">{{gpsUploadMsg}}<text class=""></text></text>
+    </view>
+    <view class="msg-text">
+        <image class="logo" src="{{logo}}"></image>
+        <text class="msg">{{scanFailMsg}}<text class=""></text></text>
+    </view>
+    <view class="menu-bar">
+        <view>扫码/Scan</view>
+        <view class="border-right"></view>
+        <view>帮助/Help</view>
+    </view>
+</view>

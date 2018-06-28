@@ -1,0 +1,45 @@
+.container{
+    padding: 20rpx;
+}
+.refund-form{
+    width: 100%;
+}
+.item-title{
+    color: #aaa;
+    margin-bottom: 30rpx;
+}
+.item-content{
+    display: flex;
+    flex-direction: row; /**横向排列**/
+    justify-content: space-between; /**撑开**/
+    align-items: center; /**居中**/
+    position: relative;
+    margin-bottom: 30rpx;
+}
+.refund-wait{
+    width: 100%;
+    text-align: center;
+    margin-top: 20%;
+}
+.wait-icon, .mark-icon{
+    width: 180rpx;
+    height: 180rpx;
+    display: block;
+    margin: 0 auto;
+}
+.refund-wait button{
+    margin-top: 30%;
+}
+.refund-pass{
+    width: 100%;  
+}
+.pass-msg{
+    text-align: center;
+}
+.addr-info view{
+    display: flex;
+    flex-direction: row; /**横向排列**/
+    justify-content: space-between; /**撑开**/
+    align-items: center; /**居中**/
+    margin: 30rpx 0;
+}

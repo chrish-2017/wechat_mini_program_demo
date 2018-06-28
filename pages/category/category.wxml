@@ -1,0 +1,13 @@
+<view class="container">
+    <view class="category">
+        <block wx:for="{{categoryInfos}}">
+            <view class="category-item" bindtap="bindCategoryItem">
+                <view class="des">
+                    <text class="border-bottom">{{item.name}}</text>
+                    <text>{{item.des}}</text>
+                </view>
+                <image src="{{item.url}}"></image>
+            </view>
+        </block>
+    </view>
+</view>

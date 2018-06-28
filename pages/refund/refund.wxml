@@ -1,0 +1,74 @@
+<view class="container">
+    <view class="refund-form" wx:if="{{mainView == 1}}">
+        <form bindsubmit="refundFormSubmit">
+            <view class="item-title">退款类型*</view>
+            <view class="item-content">
+                <text>退款退货</text>
+                <image src="{{check == 1 ? selectedCheckboxIcon : checkboxIcon}}" data-index="{{index}}" class="checkbox-icon" bindtap="bindCheckbox"></image>
+            </view>
+            <view class="item-content">
+                <view>仅退款(不退货)</view>
+                <image src="{{check == 1 ? selectedCheckboxIcon : checkboxIcon}}" data-index="{{index}}" class="checkbox-icon" bindtap="bindCheckbox"></image>
+            </view>
+            <view class="item-title">退款原因*</view>
+            <picker class="item-content" bindchange="bindRefundReason" value="{{index}}" range="{{array}}">
+                <view class="picker">
+                    请选择退款类型：{{array[index]}}
+                </view>
+                <image class="drop-icon" src="{{dropIcon}}"></image>
+            </picker>
+            <view class="item-title">退款金额*(不超过￥656.00)</view>
+            <view class="item-content">
+                <input name="" placeholder="请输入退款金额" />
+            </view>
+            <view class="item-title">退款说明</view>
+            <view class="item-content">
+                <input name="" placeholder="请输入退款说明" />
+            </view>
+            <button type="warn" form-type="submit">提交申请</button>
+        </form>
+    </view>
+
+    <view class="refund-wait" wx:if="{{mainView == 2}}">
+        <image class="wait-icon" src="{{waitIcon}}"></image>
+        <text>请稍等\n你的申请退款正在处理中\n我们将在5个工作日内回复你</text>
+        <button type="warn" bindtap="bindRefundPass">取消申请</button>
+    </view>
+
+    <view class="refund-pass" wx:if="{{mainView == 3}}">
+        <view class="pass-msg">
+            <image class="mark-icon" src="{{markIcon}}"></image>
+            <text>您的退款申请已通过\n退货退款\n请将货物寄回以下地址并填写物流信息</text>
+        </view>
+        <view class="addr-info">
+            <view>
+                <text>收件人</text>
+                <text>邹凌</text>
+            </view>
+            <view>
+                <text>电话</text>
+                <text>18380447856</text>
+            </view>
+            <view>
+                <text>收件地址</text>
+                <text>成都高新区天府软件园</text>
+            </view>
+        </view>
+        <view class="trans-info">
+            <form bindsubmit="transFormSubmit">
+                <view class="item-title ">物流公司*</view>
+                <picker class="item-content" bindchange="bindTransCompany" value="{{index}} " range="{{array}} ">
+                    <view class="picker">
+                        请选择：{{array[index]}}
+                    </view>
+                    <image class="drop-icon" src="{{dropIcon}}"></image>
+                </picker>
+                <view class="item-title ">快递单号*</view>
+                <view class="item-content">
+                    <input name=" " placeholder="请输入快递单号 " />
+                </view>
+                <button type="warn" form-type="submit">提交</button>
+            </form>
+        </view>
+    </view>
+</view>

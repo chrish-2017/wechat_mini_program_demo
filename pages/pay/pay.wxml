@@ -1,0 +1,61 @@
+<view class="container">
+    <view class="addr-info" bindtap="bindShowLayer">
+        <text>{{chooseTips}}</text>
+        <image class="right-icon" src="{{rightIcon}}"></image>
+    </view>
+
+    <view class="choose-detail" hidden="{{!showLayer}}" animation="{{animationData}}"> 
+        <form bindsubmit="addrFormSubmit">
+            <block wx:for="{{addrList}}">
+                <view class="addr-item">
+                    <image class="checkbox-icon" src="{{item.check == 1 ? selectedCheckboxIcon : checkboxIcon}}" data-index="{{index}}" bindtap="bindCheckbox"></image>
+                    <view class="addr-info">
+                        <view>
+                            <text>{{item.name}}</text>
+                            <text>{{item.number}}</text>
+                        </view>
+                        <view>{{item.addr}}</view>
+                    </view>
+                    <image class="edit-icon" src="{{editIcon}}" bindtap="bindToAddr"></image>
+                </view>
+                <block wx:if="{{item.check == 1}}">
+                    <input hidden name="name" value="{{item.name}}" />
+                    <input hidden name="number" value="{{item.number}}" />
+                    <input hidden name="addr" value="{{item.addr}}" />
+                </block>
+            </block>
+            <button  type="warn" form-type="submit">确认</button>
+        </form>
+    </view>
+    <view class="choose-detail-shadow" hidden="{{!showLayer}}" animation="{{animationShadowData}}"></view>
+
+    <view class="order-list">
+        <block wx:for="{{orderList}}">
+            <view class="order-item">
+                <view class="order-detail">
+                    <image src="{{item.picUrl}}"/>
+                    <view class="order-des">
+                        <view bindtap="bindToDetail">{{item.name}}</view>
+                        <text>{{item.tag}}</text>
+                        <view class="number">
+                            <text>￥{{item.price}}</text>
+                            <text>×{{item.num}}</text>
+                        </view>
+                    </view>
+                </view>
+                <view class="order-total">
+                    <text>共计{{num}}件商品 合计：￥{{totalPrice}}</text>
+                </view>
+                <view class="order-all">
+                    <text>运费</text>
+                    <text>￥12.00</text>
+                </view>
+            </view>
+        </block>
+    </view>
+
+    <view class="menu-bar">
+        <text class="select-all">合计: ￥{{totalPrice}}</text>
+        <button type="warn" bindtap="bindPay">支付</button>
+    </view>
+</view>
