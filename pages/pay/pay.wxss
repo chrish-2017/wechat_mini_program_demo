@@ -1,19 +1,40 @@
 @import '../orderDetail/orderDetail.wxss';
 @import '../cart/cart.wxss';
 
-.choose-detail .addr-item{
-    margin-bottom: 100rpx;
+.order-item{
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    margin: 0;
+}
+.order-detail{
+    background: #fff;
+}
+.order-fare{
+    margin-bottom: 20rpx;
+}
+.menu-bar{
+    height: 45px;
+    line-height: 45px;
+    margin: 0;
+}
+.choose-detail{
+    margin-bottom: 90rpx;
 }
 .choose-detail .addr-info{
-    width: calc(100% - 100rpx);
+    width: calc(100% - 160rpx);
+    border: none;
+    margin: 0;
+    display: flex;
+    flex-direction: column; /**竖向排列**/
+    align-items: flex-start;
 }
-.choose-detail .addr-info text{
+.choose-detail .addr-item{
     padding: 0;
 }
 .choose-detail button{
     width: 100%;
     position: absolute;
-    bottom: 0;
+    bottom: -90rpx;
     left:0;
     border-radius: 0;
 }

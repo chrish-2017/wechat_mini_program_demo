@@ -1,13 +1,15 @@
 <view class="container">
   <view class="goods-list">
-    <block wx:for="{{goodsInfo}}">
-      <view class="goods-item" bindtap="bindGoodsItem">
-        <image src="{{item.url}}"></image>
+    <block wx:for="{{goodsList}}" wx:key="goodsList">
+      <view data-id="{{item.id}}" class="goods-item" bindtap="toDetail" wx:if="{{item.goodsAttrs.length > 0}}">
+        <block wx:for="{{item.goodsImgs}}" wx:key="goodsImgs">
+          <image wx:if="{{item.imageType == 2}}" src="{{item.image.imgName}}"></image>
+        </block>
         <view class="goods-des">
-          <text>{{item.des}}</text>
-          <text>{{item.price}}</text>
+          <text class="goods-name">{{item.goodsName}}</text>
+          <text>￥{{item.goodsAttrs[0].sellPrice}}</text>
         </view>
       </view>
     </block>
-  </view>
+  </view>  
 </view>

@@ -18,7 +18,7 @@ function formatNumber(n) {
 
 function getAddrInfo(func) {
   wx.request({
-    url: 'http://housecall.sipingsoft.com/resources/addr.json',
+    url: 'https://easy-mock.com/mock/5b3357dce144ee0b9ede2e12/store/addr.json',
     header: {
         'content-type': 'application/json'
     },
@@ -86,13 +86,13 @@ function showAnimation(){
   that.setData({
     animationShadowData:shadowAnimation.export()
   })
-  
+
   setTimeout(function(){
     that.setData({
       showLayer:!that.data.showLayer
     })
   },401)
-  
+
 }
 
 module.exports = {

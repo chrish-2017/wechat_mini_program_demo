@@ -1,33 +1,43 @@
 <!--index.wxml-->
 <view class="container">
   <view class="carousel">
-    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-      <block wx:for="{{carouselImages}}">
+    <swiper indicator-dots="true" indicator-active-color="#fff" autoplay="true" interval="5000" duration="1000">
+      <block wx:for="{{carouselImages}}" wx:key="carouselImages">
         <swiper-item>
-          <image src="{{item}}" class="carousel-image" width="355" height="150"/>
+          <image data-id="{{item.goodsId}}" src="{{item.imgName}}" bindtap="toDetail" class="carousel-image" width="355" height="150"/>
         </swiper-item>
       </block>
     </swiper>
   </view>
 
   <view class="category">
-    <block wx:for="{{categoryInfos}}">
-      <view class="category-item" bindtap="bindCategoryItem">
-        <image src="{{item.url}}"></image>
-        <text>{{item.des}}</text>
+    <block wx:for="{{categoryInfos}}" wx:key="categoryInfos">
+      <view data-id="{{item.goodsTypeId}}" class="category-item" bindtap="toList">
+        <image src="{{item.imgName}}"></image>
+        <text>{{item.typeName}}</text>
       </view>
     </block>
   </view>
 
-  <view class="goods-list">
-    <block wx:for="{{goodsInfo}}">
-      <view class="goods-item" bindtap="bindGoodsItem">
-        <image src="{{item.url}}"></image>
-        <view class="goods-des">
-          <text>{{item.des}}</text>
-          <text>{{item.price}}</text>
-        </view>
+  <view class="goods-info">
+    <block wx:for="{{goodsInfo}}" wx:key="goodsInfo">
+      <view class="goods-type">
+        <text>{{item.goodsType.typeName}}</text>
+        <text data-id="{{item.id}}" class="goods-more" bindtap="toList">…</text>
       </view>
+      <view class="goods-list">
+        <block wx:for="{{item.goodsType.goodsList}}" wx:key="goodsList">
+          <view data-id="{{item.id}}" class="goods-item" bindtap="toDetail" wx:if="{{item.goodsAttrs.length > 0}}">
+            <block wx:for="{{item.goodsImgs}}" wx:key="goodsImgs">
+              <image wx:if="{{item.imageType == 2}}" src="{{item.image.imgName}}"></image>
+            </block>
+            <view class="goods-des">
+              <text class="goods-name">{{item.goodsName}}</text>
+              <text>￥{{item.goodsAttrs[0].sellPrice}}</text>
+            </view>
+          </view>
+        </block>
+      </view>      
     </block>
   </view>
 </view>

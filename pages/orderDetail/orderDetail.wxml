@@ -1,56 +1,53 @@
 <view class="container">
     <view class="addr-info">
-        <text>{{addrInfo.name}}</text>
-        <text>{{addrInfo.addr}}</text>
+        <text>{{chooseTips}}</text>
     </view>
 
     <view class="order-list">
-        <block wx:for="{{orderList}}">
-            <view class="order-item">
-                <view class="order-info">
-                    <text>订单编号 {{item.number}}</text>
-                    <text>{{item.status}}</text>
-                </view>
-                <view class="order-detail">
-                    <image src="{{item.picUrl}}"/>
-                    <view class="order-des">
-                        <view bindtap="bindToDetail">{{item.name}}</view>
-                        <text>{{item.tag}}</text>
-                        <text>￥{{item.price}}</text>
-                    </view>
-                    <button class="refund-btn" bindtap="bindRefund">退款</button>
-                </view>
-                <view class="order-total">
-                    <text>共计{{item.num}}件商品 合计：￥{{item.count}}</text>
-                </view>
-                <view class="order-fare">
-                    <text>运费:￥12.00</text>
-                </view>
-                <view class="order-all">
-                    <text class="fw">总计</text>
-                    <text class="red fw">￥{{item.count}}</text>
-                </view>
+        <view class="order-item">
+            <view class="order-info">
+                <text>订单编号 {{orderList.orderNo}}</text>
+                <text class="order-state">{{stateArray[orderList.state]}}</text>
             </view>
-        </block>
-    </view>
-
-    <view class="order-time">
-        <view>
+            <block wx:for="{{orderList.orderList}}" wx:key="orderList">
+                <view class="order-detail">
+                    <image src="{{item.goodsAttr.goods.goodsImgs[0].image.imgName}}"/>
+                    <view data-id="{{item.goodsAttr.goods.id}}" class="order-des" bindtap="toDetail">
+                        <view class="number">
+                            <text class="goods-name">{{item.goodsAttr.goods.goodsName}}</text>
+                            <text class="red small">{{stateArray[item.stauts]}}</text>
+                        </view>
+                        <text class="grey">{{item.goodsAttr.attrValue}}</text>
+                        <view class="number">
+                            <text class="grey">￥{{item.goodsAttr.sellPrice}}</text>
+                            <text>×{{item.counts}}</text>
+                        </view>
+                    </view>
+                </view>
+                <view class="menu-bar border-bottom">
+                    <button data-id="{{item.orderDetail.express.id}}" data-no="{{item.orderDetail.transportNo}}"  type="warn" class="white-bg" bindtap="bindCheckTransInfo" wx:if="{{item.stauts == 4 || item.stauts == 5}}">查看物流</button>
+                    <button data-id="{{item.id}}" data-view="1" type="warn" bindtap="bindApplyRefund" wx:if="{{item.stauts == 3 || item.stauts == 4}}">退款</button>
+                    <button data-id="{{item.id}}" type="warn" bindtap="confirmOrder" wx:if="{{item.stauts == 4}}">确认收货</button>
+                    <button data-id="{{item.id}}" data-view="2" type="warn" bindtap="bindApplyRefund" wx:if="{{item.stauts == 11}}">查看进度</button>
+                    <button data-id="{{item.id}}" data-view="3" type="warn" bindtap="bindApplyRefund" wx:if="{{item.stauts == 13}}">填写退货单</button>
+                </view>
+            </block>
+            <view class="order-fare">
+                <text>共计{{orderList.counts}}件商品 小计：{{orderList.orderPrice}}</text>
+                <text>运费：{{orderList.orderExpressPrice}}</text>
+            </view>
+            <view class="order-total bold">
+                <text class="">总计</text>
+                <text class="red">{{orderList.orderPrice + orderList.orderExpressPrice}}</text>
+            </view>
+        </view>
+        <view class="order-time">
             <text>下单时间</text>
-            <text>2017-02-15 14:00</text>
+            <text>{{orderList.orderList[0].createDate}}</text>
         </view>
-        <view class="order-extra">
-            <text>卖家发货时间</text>
-            <text>2017-02-15 14:00</text>
+        <view class="menu-bar bottom-bar" wx:if="{{orderList.state == 1}}">
+            <button data-id="{{orderList.orderNo}}" type="warn" class="white-bg" bindtap="cancelOrder">取消订单</button>
+            <button type="warn" bindtap="">付款</button>
         </view>
-        <view class="order-extra">
-            <text>买家自动收货时间</text>
-            <text>2017-02-15 14:00</text>
-        </view>
-    </view>
-
-    <view class="menu-bar">
-        <button bindtap="bindCheckTransInfo">查看物流</button>
-        <button type="warn" bindtap="bindConfirmOrder">确认收货</button>
     </view>
 </view>

@@ -1,5 +1,6 @@
 {
   "pages":[
+    
     "pages/index/index",
     "pages/category/category",
     "pages/goodsList/goodsList",
@@ -8,11 +9,9 @@
     "pages/pay/pay",
     "pages/mine/mine",
     "pages/orderDetail/orderDetail",
-    "pages/refund/refund",
     "pages/transInfo/transInfo",
+    "pages/refund/refund",
     "pages/addr/addr",
-    "pages/loadInfo/loadInfo",
-    "pages/loadInformation/loadInformation",
     "pages/test/test"
   ],
   "window":{
@@ -22,6 +21,7 @@
     "navigationBarTextStyle":"black"
   },
   "tabBar":{
+    "backgroundColor": "#fff", 
     "list":[{
       "pagePath": "pages/index/index",
       "text": "首页",

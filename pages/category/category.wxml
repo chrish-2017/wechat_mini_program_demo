@@ -1,13 +1,19 @@
 <view class="container">
-    <view class="category">
-        <block wx:for="{{categoryInfos}}">
-            <view class="category-item" bindtap="bindCategoryItem">
-                <view class="des">
-                    <text class="border-bottom">{{item.name}}</text>
-                    <text>{{item.des}}</text>
+  <view class="goods-info">
+    <block wx:for="{{goodsInfo}}" wx:key="goodsInfo">
+      <view wx:if="{{item.subType.length > 0}}">
+        <view class="goods-type">
+            <text>{{item.typeName}}</text>
+        </view>
+        <view class="category">
+            <block wx:for="{{item.subType}}" wx:key="subType">
+                <view data-id="{{item.id}}" class="category-item" bindtap="toList">
+                    <image src="{{hostString}}/fstatic/imgs/{{item.image.imgName}}"></image>
+                    <text>{{item.typeName}}</text>
                 </view>
-                <image src="{{item.url}}"></image>
-            </view>
-        </block>
-    </view>
+            </block>
+        </view> 
+      </view>    
+    </block>
+  </view>
 </view>

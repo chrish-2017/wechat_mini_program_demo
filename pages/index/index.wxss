@@ -14,24 +14,48 @@ swiper{
   display: flex;
   flex-direction: row; /**横向排列**/
   flex-wrap: wrap; /**换行**/
+  justify-content: space-around; /**撑开居中**/
+  background: #fff;
+  margin-bottom: 10px;
 }
 .category-item{
-  width: 21%;
+  width: 46%;
   margin: 2%;
   display: flex;
   flex-direction: column; /**竖向排列**/
   align-items: center; /**居中**/
 }
 .category-item image{
-  width: 150rpx;
-  height: 150rpx;
+  width: 180rpx;
+  height: 180rpx;
   border-radius: 50%;
+  border: 1px solid #eee;
+  margin-bottom: 20rpx;
+}
+.goods-info{
+  width: 100%;
+  background: #fff;
+}
+.goods-type{
+  display: flex;
+  flex-direction: row; /**横向排列**/
+  justify-content: space-between; /**撑开**/
+  align-items: center; /**居中**/
+  margin: 10px;
+  padding-left: 10px;
+  border-left: 5px solid #000;
+}
+.goods-more{
+  font-weight: bold;
+  font-size: 36rpx;
 }
 .goods-list{
   width: 100%;
+  background: #fff;
   display: flex;
   flex-direction: row; /**横向排列**/
   flex-wrap: wrap; /**换行**/
+  justify-content: space-around; /**撑开居中**/
 }
 .goods-item{
   width: 46%;
@@ -44,6 +68,10 @@ swiper{
 
 .goods-item .goods-des{
   display: flex;
-  flex-direction: row; /**横向排列**/
-  justify-content: space-between; /**撑开**/
+  flex-direction: column; /**竖向排列**/
+}
+.goods-item .goods-name{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

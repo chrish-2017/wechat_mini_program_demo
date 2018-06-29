@@ -1,38 +1,41 @@
 .carousel{
   width: 100%;
-  height: 500rpx;
+  height: 800rpx;
 }
 swiper{
   height: 100%; /**默认150px**/
 }
 .carousel-image{
   width: 100%;
+  height: 100%;
 }
 .goods-info{
     width: calc(100% - 60rpx);
+    background: #fff;
     padding: 20rpx 30rpx;
+    margin-bottom: 20rpx;
 }
 .goods-name{
-    font-size: 38rpx;
-    line-height: 10rpx;
+    font-size: 34rpx;
+}
+.goods-tag{
+    font-size: 24rpx;
+    color: #aaa;
 }
 .goods-price{
     font-size:30rpx;
     color: #f44336;
-    display: block;
-    margin: 10rpx 0;
-}
-.goods-tag{
-    color: #aaa;
 }
 .choose-type{
     width: calc(100% - 60rpx);
+    background: #fff;
+    padding: 20rpx 30rpx;
     display: flex;
     flex-direction: row; /**横向排列**/
     justify-content: space-between; /**撑开**/
     align-items: center; /**居中**/
-    margin:20rpx auto;
     position: relative;
+    margin-bottom: 20rpx;
 }
 .goods-pic{
     position: absolute;
@@ -40,7 +43,7 @@ swiper{
     left:20rpx;
 }
 .goods-pic image{
-    width: 200rpx;
+    width: 220rpx;
     height: 230rpx;
     border:1px solid #e5e5e5;
 }
@@ -48,9 +51,16 @@ swiper{
     height: 160rpx;
     display: flex;
     flex-direction: column; /**竖向排列**/
-    justify-content: space-around; /**撑开居中**/
     margin-left: 250rpx;
     margin-bottom: 60rpx;
+}
+.price{
+    font-size:36rpx;
+    color:#f00;
+    margin-bottom:10rpx;
+}
+.stock{
+    color: #aaa;
 }
 .type-item{
     width: 100%;
@@ -62,16 +72,17 @@ swiper{
     margin-top: 20rpx;
 }
 .type-content text{
-    padding:5rpx 20rpx;
-    border: 1px solid #e5e5e5;
+    padding:8rpx 20rpx;
+    border: 1px solid #eee;
     margin-right: 30rpx;
 }
 .type-content text.choosed{
+    border: none;
     background: #f44336;
     color: #fff;
 }
 .choose-detail .choose-number{
-    margin-bottom: 160rpx;
+    margin-bottom: 100rpx;
     display: flex;
     flex-direction: row; /**横向排列**/
     justify-content: space-between; /**撑开**/
@@ -88,11 +99,29 @@ swiper{
     width: 100%;
     position: absolute;
     bottom: 0;
-    left:0;
+    left: 0;
     border-radius: 0;
+}
+.close-tip{
+    position: absolute;
+    bottom: 40rpx;
+    left: 20rpx;
+    color: #f00;
+}
+.putaway-tip{
+    width: 100%;
+    background: #999;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
 }
 .goods-detail{
     width: 100%;
+    min-height: 500rpx;
+    background: #fff;
 }
 .goods-detail .nav{
     display: flex;
@@ -109,17 +138,51 @@ swiper{
     border-bottom: 2px solid;
 }
 .goods-detail .content{
-    padding: 30rpx;
+    width: calc(100% - 60rpx);
+    padding: 20rpx 30rpx;
+    margin-bottom: 100rpx;
+}
+.wxParse-img{
+    width: 100%!important; 
+}
+.goods-detail .specifications{
+    display: flex;
+    flex-direction: column; /**竖向排列**/
+}
+.goods-detail .specification{
+    line-height: 80rpx;
+    border-bottom: 1px solid #eee;
+}
+.goods-detail .specification:last-child{
+    border: none;
+}
+.goods-detail .brand{
+    display: flex;
+}
+.goods-detail .brand-image{
+    width: 120rpx;
+    height: 100rpx;
+}
+.goods-detail .brand-info{
+    display: flex;
+    flex-direction: column; /**竖向排列**/
+    margin-left: 20rpx;
+}
+.goods-detail .brand-des{
+    font-size: 22rpx;
+    color: #aaa;
 }
 .menu-bar{
     width: 100%;
-    height: 60px;
-    line-height: 60px;
+    background: #fff;
+    height: 45px;
+    line-height: 45px;
     text-align: center;
     color: #fff;
     position: fixed;
     bottom: 0;
-    display: flex;  
+    display: flex; 
+    border-top: 1px solid #eee; 
 }
 .menu-bar view{
     width: 15%;
@@ -127,7 +190,7 @@ swiper{
 .menu-bar image{
     width: 50rpx;
     height: 50rpx;   
-    margin-top: 30rpx;
+    margin-top: 10px;
 }
 .menu-bar .deep-blue-bg{
     width: 40%;

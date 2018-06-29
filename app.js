@@ -13,9 +13,11 @@ App({
     }else{
       //调用登录接口
       wx.login({
-        success: function () {
+        success: function (res) {
+          console.log(res);
           wx.getUserInfo({
             success: function (res) {
+              console.log(res);
               that.globalData.userInfo = res.userInfo
               typeof cb == "function" && cb(that.globalData.userInfo)
             }
@@ -25,6 +27,10 @@ App({
     }
   },
   globalData:{
-    userInfo:null
+    userInfo: {
+      id: 88,
+      nickName: '鱼香茄子不甜'
+    }, 
+    hostString: 'https://easy-mock.com/mock/5b3357dce144ee0b9ede2e12/store'
   }
 })

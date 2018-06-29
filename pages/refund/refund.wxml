@@ -1,29 +1,34 @@
 <view class="container">
     <view class="refund-form" wx:if="{{mainView == 1}}">
         <form bindsubmit="refundFormSubmit">
-            <view class="item-title">退款类型*</view>
-            <view class="item-content">
+            <input name="order.id" hidden value="{{orderId}}"/>
+            <input name="status" hidden value="{{status}}"/>
+            <input name="storeId" hidden value="1"/>
+            <input name="createBy" hidden value="{{userInfo.id}}"/>
+            <view class="item-title">退款类型<text class="red">*</text></view>
+            <view class="item-content border-bottom">
                 <text>退款退货</text>
-                <image src="{{check == 1 ? selectedCheckboxIcon : checkboxIcon}}" data-index="{{index}}" class="checkbox-icon" bindtap="bindCheckbox"></image>
+                <image src="{{status == 1 ? selectedCheckboxIcon : checkboxIcon}}" class="checkbox-icon" bindtap="bindCheckbox"></image>
             </view>
             <view class="item-content">
-                <view>仅退款(不退货)</view>
-                <image src="{{check == 1 ? selectedCheckboxIcon : checkboxIcon}}" data-index="{{index}}" class="checkbox-icon" bindtap="bindCheckbox"></image>
+                <view>仅退款<text class="grey">(不退货)</text></view>
+                <image src="{{status == 2 ? selectedCheckboxIcon : checkboxIcon}}" class="checkbox-icon" bindtap="bindCheckbox"></image>
             </view>
-            <view class="item-title">退款原因*</view>
-            <picker class="item-content" bindchange="bindRefundReason" value="{{index}}" range="{{array}}">
-                <view class="picker">
-                    请选择退款类型：{{array[index]}}
+            <view class="item-title">退款原因<text class="red">*</text></view>
+            <picker range="{{reasonArray}}" bindchange="bindReasonChange">
+                <view class="item-content">
+                    请选择退款原因：{{reasonArray[choosedReason]}}
+                    <image class="drop-icon" src="{{dropIcon}}"></image>
                 </view>
-                <image class="drop-icon" src="{{dropIcon}}"></image>
+                <input name="returnReason" hidden value="{{choosedReason+1}}"/>
             </picker>
-            <view class="item-title">退款金额*(不超过￥656.00)</view>
+            <view class="item-title">退款金额<text class="red">*</text><text class="grey">(不超过￥0.01)</text></view>
             <view class="item-content">
-                <input name="" placeholder="请输入退款金额" />
+                <input type="digit" name="price" placeholder="请输入退款金额" />
             </view>
             <view class="item-title">退款说明</view>
             <view class="item-content">
-                <input name="" placeholder="请输入退款说明" />
+                <input name="remark" placeholder="请输入退款说明" />
             </view>
             <button type="warn" form-type="submit">提交申请</button>
         </form>
@@ -31,41 +36,45 @@
 
     <view class="refund-wait" wx:if="{{mainView == 2}}">
         <image class="wait-icon" src="{{waitIcon}}"></image>
-        <text>请稍等\n你的申请退款正在处理中\n我们将在5个工作日内回复你</text>
+        <text class="grey">请稍等\n你的退款申请正在处理中\n我们将在1个工作日内回复你</text>
         <button type="warn" bindtap="bindRefundPass">取消申请</button>
     </view>
 
     <view class="refund-pass" wx:if="{{mainView == 3}}">
         <view class="pass-msg">
             <image class="mark-icon" src="{{markIcon}}"></image>
-            <text>您的退款申请已通过\n退货退款\n请将货物寄回以下地址并填写物流信息</text>
+            <text class="grey">您的退款申请已通过\n请将货物寄回以下地址并填写物流信息</text>
         </view>
         <view class="addr-info">
             <view>
                 <text>收件人</text>
-                <text>邹凌</text>
+                <text class="grey">{{address.fullName}}</text>
             </view>
             <view>
                 <text>电话</text>
-                <text>18380447856</text>
+                <text class="grey">{{address.phone}}</text>
             </view>
             <view>
                 <text>收件地址</text>
-                <text>成都高新区天府软件园</text>
+                <text class="grey">{{address.detailedAddress}}</text>
             </view>
         </view>
         <view class="trans-info">
             <form bindsubmit="transFormSubmit">
-                <view class="item-title ">物流公司*</view>
-                <picker class="item-content" bindchange="bindTransCompany" value="{{index}} " range="{{array}} ">
-                    <view class="picker">
-                        请选择：{{array[index]}}
+                <input name="orderId" hidden value="{{orderId}}"/>
+                <input name="userId" hidden value="{{userInfo.id}}"/>
+                <view class="item-title ">物流公司<text class="red">*</text></view>
+                <picker range="{{companyArray}}" range-key="expressName" bindchange="bindCompanyChange">
+                    <view class="item-content">
+                        请选择：{{companyArray[choosedCompany].expressName}}
+                        <image class="drop-icon" src="{{dropIcon}}"></image>
                     </view>
-                    <image class="drop-icon" src="{{dropIcon}}"></image>
+                    <input name="expressId" hidden value="{{companyArray[choosedCompany].id}}"/>
                 </picker>
-                <view class="item-title ">快递单号*</view>
+                <view class="item-title ">快递单号<text class="red">*</text></view>
                 <view class="item-content">
-                    <input name=" " placeholder="请输入快递单号 " />
+                    <input type="number" name="transportNo" value="{{transportNo}}" placeholder="请输入快递单号 " />
+                    <image class="scan-icon" src="{{scanIcon}}" bindtap="toScan"></image>
                 </view>
                 <button type="warn" form-type="submit">提交</button>
             </form>

@@ -2,44 +2,30 @@
     <view class="trans-info">
         <view class="goods-info">
             <image src="{{goodsIcon}}"></image>
-            <view class="overlay">2件商品</view>
+            <view class="overlay">1件商品</view>
         </view>
         <view class="company-info">
-            <view>物流状态: 运输中</view>
-            <view>快递公司:顺丰速递</view>
-            <view>快递编号:123456789</view>
+            <view>物流状态: <text class="{{transInfo.status == 1 ? 'red' : 'green'}}">{{stateArray[transInfo.status]}}</text></view>
+            <view class="grey">
+              <view>快递公司:{{transInfo.company}}</view>
+              <view>快递编号:{{transInfo.no}}</view>
+            </view>
         </view>
     </view>
 
-    <view class="trans-detail">
+    <view class="trans-detail" wx:if="{{transInfo.list.length > 0}}">
         <view class="trans-line"></view>
-        <view class="trans-item">
-            <view class='dot'></view>
-            <view>
-                <view>快件在【成都双流集散中心】已装车</view><!-- ，准备发往【成都市高新区天泰路营业点】 -->
-                <view>2017-02-20 13:31:20</view>
+        <block wx:for="{{transInfo.list}}" wx:key="list">
+          <view class="trans-item {{index == 0 ? 'item-first' : ''}}">
+            <view class="dot"></view>
+            <view class="trans-remark">
+                <view>{{item.remark}}</view>
+                <view class="grey">{{item.datetime}}</view>
             </view>
-        </view>
-        <view class="trans-item">
-            <view class='dot'></view>
-            <view>
-                <view>快件到达【成都双流集散中心】</view>
-                <view>2017-02-20 13:31:20</view>
-            </view>
-        </view>
-        <view class="trans-item">
-            <view class='dot'></view>
-            <view>
-                <view>快件在【成都双流集散中心】已装车</view><!-- ，准备发往【成都市高新区天泰路营业点】 -->
-                <view>2017-02-20 13:31:20</view>
-            </view>
-        </view>
-        <view class="trans-item">
-            <view class='dot'></view>
-            <view>
-                <view>快件到达【成都双流集散中心】</view>
-                <view>2017-02-20 13:31:20</view>
-            </view>
-        </view>
+          </view>
+        </block>
+    </view>
+    <view class="trans-detail non-tip" wx:else>
+      <text>抱歉，现在还没有物流信息</text>
     </view>
 </view>

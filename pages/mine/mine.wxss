@@ -1,21 +1,24 @@
 .user-info {
   width: 100%;
+  background: #fff;
   display: flex;
   flex-direction: row; /**横向排列**/
   align-items: center; /**居中**/
   padding: 20rpx 0;
-  font-size: 38rpx;
-  border-top: 1px solid #e5e5e5;
+  font-size: 32rpx;
+  border-top: 1px solid #eee;
+  margin-bottom: 20rpx;
 }
 .user-info image{
-  width: 150rpx;
-  height: 150rpx;
+  width: 100rpx;
+  height: 100rpx;
   border-radius: 50%;
   border:1px solid #e5e5e5;
-  margin: 0 40rpx;
+  margin: 0 20rpx;
 }
 .nav{
   width: 100%;
+  background: #fff;
   display: flex;
   flex-direction: row; /**横向排列**/
   justify-content: space-around; /**撑开居中**/
@@ -35,25 +38,38 @@
 }
 .toOrder{
   display: inline;
-  color: #f44336;
+  color: #177517;
   text-decoration: underline;
 }
 .order-list{
   width: 100%;
 }
 .order-item{
-  padding: 0 30rpx 30rpx;
+  background: #fff;
+  margin-bottom: 20rpx;
+}
+.order-item:last-child{
+  margin: 0;
 }
 .order-info{
   display: flex;
   flex-direction: row; /**横向排列**/
   justify-content: space-between; /**撑开**/
-  padding: 20rpx 0;
+  padding: 20rpx 30rpx;
+}
+.order-state{
+  color: #f00;
+}
+.grey{
+  color: #aaa;
 }
 .order-detail{
+  background: #eee;
   display: flex;
   flex-direction: row; /**横向排列**/
   position: relative;
+  padding: 20rpx 30rpx;
+  margin-bottom: 10rpx;
 }
 .order-detail image{
   width: 140rpx;
@@ -71,33 +87,57 @@
   flex-direction: row; /**横向排列**/
   justify-content: space-between; /**撑开**/
 }
-.order-total, .menu-bar{
-  width: 100%;
+.order-total{
+  background: #fff;
+  display: flex;
+  flex-direction: row; /**横向排列**/
+  justify-content: space-between; /**撑开**/
+  padding: 20rpx 30rpx;
+}
+.menu-bar{
+  background: #fff;
   display: flex;
   flex-direction: row; /**横向排列**/
   justify-content: flex-end; /**末尾**/
+  padding: 20rpx 30rpx;
 }
 .menu-bar button{
-  font-size: 24rpx;
-  padding-top: 8rpx;
-  padding-bottom: 8rpx;
-  margin-right: 0;
-  margin-left: 20rpx;
-  border-radius: 5rpx;
+  font-size:20rpx;
+  padding-top:6rpx;
+  padding-bottom:6rpx;
+  margin-right:0;
+  margin-left:20rpx;
+  border-radius:10rpx;
+}
+.white-bg{
+  background-color: #fff!important;
+  color: #aaa!important;
 }
 .addr-item{
+  background: #fff;
   display: flex;
   flex-direction: row; /**横向排列**/
   justify-content: space-between; /**撑开**/
   align-items: center; /**居中**/
   padding: 20rpx 30rpx;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #eee;
 }
 .addr-info{
-  width: calc(100% - 150rpx);
+  width: calc(100% - 160rpx);
+}
+.addr-detail{
+  color: #aaa;
+  font-size: 22rpx;
+  margin-top: 5rpx;
+}
+.del-icon{
+  width: 25rpx;
+  height: 30rpx;
+  margin-left: 10rpx;
 }
 .addr-add{
   height: 120rpx;
+  background: #fff;
   display: flex;
   flex-direction: row; /**横向排列**/
   justify-content: center; /**居中**/

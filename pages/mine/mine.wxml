@@ -11,55 +11,60 @@
 
     <view class="content">
         <view wx:if="{{mainView == 1}}">
-            <view class="noOrder" wx:if="{{orderList.length == 0}}">
+            <view class="noOrder" wx:if="{{records.length == 0}}">
                 你还没有订单，快<view class="toOrder" bindtap="bindToIndex">去下单</view>吧
             </view>
             <view class="order-list" wx:else>
-                <block wx:for="{{orderList}}">
+                <block wx:for="{{records}}" wx:key="records">
                     <view class="order-item">
                         <view class="order-info">
-                            <text>订单编号 {{item.number}}</text>
-                            <text>{{item.status}}</text>
+                            <text>订单编号 {{item.orderNo}}</text>
+                            <text class="order-state">{{stateArray[item.state]}}</text>
                         </view>
-                        <view class="order-detail">
-                            <image src="{{item.picUrl}}"/>
-                            <view class="order-des">
-                                <view bindtap="bindToDetail">{{item.name}}</view>
-                                <text>{{item.tag}}</text>
-                                <view class="number">
-                                    <text>￥{{item.price}}</text>
-                                    <text>×{{item.num}}</text>
+                        <block wx:for="{{item.orderList}}" wx:key="item.orderList">
+                            <view class="order-detail">
+                                <image src="{{item.goodsAttr.goods.goodsImgs[0].image.imgName}}"/>
+                                <view data-id="{{item.goodsAttr.goods.id}}" class="order-des" bindtap="toDetail">
+                                    <view>{{item.goodsAttr.goods.goodsName}}</view>
+                                    <text class="grey">{{item.goodsAttr.attrValue}}</text>
+                                    <view class="number">
+                                        <text class="grey">￥{{item.goodsAttr.sellPrice}}</text>
+                                        <text>×{{item.counts}}</text>
+                                    </view>
                                 </view>
                             </view>
+                        </block>
+                        <view class="order-total border-bottom">
+                            <text>运费：{{item.orderExpressPrice}}</text>
+                            <text>共计{{item.counts}}件商品 合计：{{item.orderPrice}}</text>
                         </view>
-                        <view class="order-total">
-                            <text>共计{{item.num}}件商品 合计：￥{{item.count}}</text>
+                        <view class="menu-bar" wx:if="{{item.state == 1}}">
+                            <button data-id="{{item.orderNo}}" type="warn" class="white-bg" bindtap="cancelOrder">取消订单</button>
+                            <button data-id="{{item.orderNo}}" type="warn" bindtap="bindToDetail">去付款</button>
                         </view>
-                        <view class="menu-bar">
-                            <button wx:if="{{item.status != '已收货'}}" bindtap="bindCancelOrder">取消订单</button>
-                            <button bindtap="bindCheckTransInfo">查看物流</button>
-                            <button type="warn" wx:if="{{item.status != '已收货'}}" bindtap="bindConfirmOrder">确认收货</button>
-                            <button type="warn" bindtap="bindApplyRefund">申请退货</button>
+                        <view class="menu-bar" wx:else>
+                            <button data-id="{{item.orderNo}}" type="warn" bindtap="bindToDetail">查看订单详情</button>
                         </view>
                     </view>
                 </block>
             </view>
         </view>
         <view wx:if="{{mainView == 2}}">
-            <block wx:for="{{addrList}}">
+            <block wx:for="{{addrList}}" wx:key="addrList">
                 <view class="addr-item">
-                    <image class="checkbox-icon" src="{{item.check == 1 ? selectedCheckboxIcon : checkboxIcon}}" data-index="{{index}}" bindtap="bindCheckbox"></image>
+                    <image class="checkbox-icon" src="{{item.isDefault? selectedCheckboxIcon : checkboxIcon}}" data-index="{{index}}" bindtap="bindCheckbox"></image>
                     <view class="addr-info">
                         <view>
-                            <text>{{item.name}}</text>
-                            <text>{{item.number}}</text>
+                            <text>{{item.fullName}}</text>
+                            <text>   {{item.phone}}</text>
                         </view>
-                        <view>{{item.addr}}</view>
+                        <view class="addr-detail">{{item.province}}{{item.city}}{{item.county}}{{item.detailedAddress}}</view>
                     </view>
-                    <image class="edit-icon" src="{{editIcon}}" bindtap="bindToAddr"></image>
+                    <image data-id="{{item.id}}" class="edit-icon" src="{{editIcon}}" bindtap="toAddr"></image>
+                    <image data-id="{{item.id}}" data-index="{{index}}" class="del-icon" src="{{deleteIcon}}" bindtap="delAddr"></image>
                 </view>
             </block>
-            <view class="addr-add" bindtap="bindToAddr">
+            <view class="addr-add" bindtap="toAddr">
                 <image class="add-icon" src="{{addIcon}}"/>
                 <text>添加地址</text>
             </view>

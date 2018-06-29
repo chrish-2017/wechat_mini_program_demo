@@ -1,30 +1,36 @@
 <view class="container">
     <view class="addr-form">
         <form bindsubmit="addrFormSubmit">
-            <input placeholder="收货人姓名" name="username"/>
-            <input placeholder="电话号码" type="number" name="number"/>
-            <picker bindchange="bindProChange" disabled="{{proArray.length <= 1}}" value="{{proIndex}}" range-key="name" range="{{proArray}}">
+            <input name="id" hidden value="{{address.id}}"/>
+            <input name="userId" hidden value="{{userInfo.id}}"/>
+            <input placeholder="收货人姓名" name="fullName" value="{{address.fullName}}" bindblur="fullNameChange"/>
+            <input placeholder="电话号码" type="number" name="phone" value="{{address.phone}}" bindblur="phoneChange"/>
+            <picker bindchange="bindProChange" disabled="{{proArray.length <= 1}}" value="{{address.proIndex}}" range-key="name" range="{{proArray}}">
                 <view class="picker">
-                    选择省份：{{proArray[proIndex].name}}
-                    <input name="pro" hidden value="{{proArray[proIndex].name}}"/>
+                    选择省份：{{proArray[address.proIndex].name}}
+                    <input name="proIndex" hidden value="{{address.proIndex}}"/>
+                    <input name="province" hidden value="{{proArray[address.proIndex].name}}"/>
                 </view>
             </picker>
-            <picker bindchange="bindCityChange" disabled="{{cityArray.length <= 1}}" value="{{cityIndex}}" range-key="name" range="{{cityArray}}">
+            <picker bindchange="bindCityChange" disabled="{{cityArray.length <= 1}}" value="{{address.cityIndex}}" range-key="name" range="{{cityArray}}">
                 <view class="picker">
-                    当前城市：{{cityArray[cityIndex].name}}
-                    <input name="city" hidden value="{{cityArray[cityIndex].name}}"/>
+                    当前城市：{{cityArray[address.cityIndex].name}}
+                    <input name="cityIndex" hidden value="{{address.cityIndex}}"/>
+                    <input name="city" hidden value="{{cityArray[address.cityIndex].name}}"/>
                 </view>
             </picker>
-            <picker bindchange="bindAreaChange" disabled="{{areaArray.length <= 1}}" value="{{areaIndex}}" range-key="name" range="{{areaArray}}">
+            <picker bindchange="bindAreaChange" disabled="{{areaArray.length <= 1}}" value="{{address.areaIndex}}" range-key="name" range="{{areaArray}}">
                 <view class="picker">
-                    当前地区：{{areaArray[areaIndex].name}}
-                    <input name="area" hidden value="{{areaArray[areaIndex].name}}"/>
+                    当前地区：{{areaArray[address.areaIndex].name}}
+                    <input name="areaIndex" hidden value="{{address.areaIndex}}"/>
+                    <input name="county" hidden value="{{areaArray[address.areaIndex].name}}"/>
                 </view>
             </picker>
-            <input placeholder="详细地址" name="addr"/>
+            <input placeholder="详细地址" name="detailedAddress" value="{{address.detailedAddress}}" bindblur="detailedAddressChange"/>
             <view class="addr-default">
-                <image class="checkbox-icon" src="{{checked == 1 ? selectedCheckboxIcon : checkboxIcon}}" bindtap="bindCheckbox"></image>
+                <image class="checkbox-icon" src="{{address.isDefault? selectedCheckboxIcon : checkboxIcon}}" bindtap="bindCheckbox"></image>
                 设置为默认地址
+                <input name="isDefault" hidden value="{{address.isDefault}}"/>
             </view>
             <button type="warn" formType="submit">保存地址</button>
         </form>

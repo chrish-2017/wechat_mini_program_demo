@@ -1,70 +1,62 @@
 var app = getApp()
+var hostString = app.globalData.hostString
+var userInfo = app.globalData.userInfo
 Page({
   data: {
-    goodsList:[{
-      id:'1',picUrl:'../../images/goods.jpg',name:'[NIID]多功能单肩斜跨背包',tag:'中号',price:'199',num:1,selected:false
-    },{
-      id:'2',picUrl:'../../images/goods.jpg',name:'[NIID]多功能单肩斜跨背包',tag:'中号',price:'199',num:1,selected:false
-    }],
     checkboxIcon:'../../images/checkbox.png',
     selectedCheckboxIcon:'../../images/selectedCheckbox.png',
     addIcon:'../../images/addIcon.png',
     minusIcon:'../../images/minusIcon.png',
-    deleteIcon:'../../images/delete.png',
-    selectedAllStatus:true,
-    totalPrice:0
+    deleteIcon:'../../images/delete.png'
   },
   onLoad: function(){
     this.init();
   },
+  onShow: function () {
+    this.init();
+  },
   init: function(){
+    var that = this;
+    wx.request({
+      url: hostString + '/intranet/cart/getAllCart',
+      data: { createBy: userInfo.id },
+      success: function (res) {
+        console.log("myCart==");
+        console.log(res);
+        var goodsList = res.data.o;
+        for (var i = 0; i < goodsList.length; i++) {
+          if (goodsList[i].goodsAttr.goods.selected){
+            goodsList[i].selected = true;
+          }
+        }
+        that.setData({
+          goodsList: goodsList,
+          hostString: hostString
+        });
+        that.count();
+      }
+    });
+  },
+  count: function(){
     var goodsList = this.data.goodsList;
-    var totalPrice = 0;
     var selectedAllStatus = true;
+    var allowPay = false;
+    var totalPrice = 0;
     for(var i=0; i<goodsList.length; i++){
       if(goodsList[i].selected){
-        totalPrice += parseInt(goodsList[i].price*goodsList[i].num);
+        totalPrice += goodsList[i].goodsAttr.sellPrice * goodsList[i].counts;
+        allowPay = true;
       }else{
-        selectedAllStatus = false;
+        if (!goodsList[i].goodsAttr.goods.selected){
+          selectedAllStatus = false;
+        }
       }
     }
     this.setData({
-      totalPrice: totalPrice,
-      selectedAllStatus: selectedAllStatus
-    })
-  },
-  bindAddIcon: function(e){
-    var goodsList = this.data.goodsList;
-    var totalPrice = this.data.totalPrice;
-    var index = e.target.dataset.index;
-    goodsList[index].num++;
-    totalPrice += parseInt(goodsList[index].price);
-    this.setData({
-      goodsList: goodsList,
+      selectedAllStatus: selectedAllStatus,
+      allowPay: allowPay,
       totalPrice: totalPrice
     })
-  },
-  bindMinusIcon: function(e){
-    var goodsList = this.data.goodsList;
-    var totalPrice = this.data.totalPrice;
-    var index = e.target.dataset.index;
-    if(goodsList[index].num > 1){
-      goodsList[index].num--;
-      totalPrice -= parseInt(goodsList[index].price);
-      this.setData({
-        goodsList: goodsList,
-        totalPrice: totalPrice
-      })
-    }
-  },
-  bindDelIcon: function(e){
-    var goodsList = this.data.goodsList;
-    var index = e.target.dataset.index;
-    goodsList.splice(index, 1);
-    this.setData({
-      goodsList: goodsList
-    })
-    this.init();
   },
   bindCheckbox: function(e){
     var goodsList = this.data.goodsList;
@@ -73,34 +65,110 @@ Page({
     this.setData({
       goodsList: goodsList
     })
-    this.init();
+    this.count();
   },
   bindSelectAll: function(){
     var goodsList = this.data.goodsList;
     var selectedAllStatus = this.data.selectedAllStatus;
-    for(var i=0; i<goodsList.length; i++){
-      goodsList[i].selected = !selectedAllStatus;
-    }
     selectedAllStatus = !selectedAllStatus;
+    for(var i=0; i<goodsList.length; i++){
+      if (goodsList[i].goodsAttr.goods.isPutaway){
+        goodsList[i].selected = selectedAllStatus;
+      }
+    }
     this.setData({
       goodsList: goodsList,
       selectedAllStatus: selectedAllStatus
     })
-    this.init();
+    this.count();
+  },
+  bindAddIcon: function(e){
+    var cartId = e.currentTarget.dataset.id;
+    var that = this;
+    wx.request({
+      url: hostString + '/intranet/cart/updateNumber',
+      data: {type: 1, cartId: cartId},
+      method: 'POST',
+      success: function(res) {
+        if(res.statusCode == 200){
+          var goodsList = that.data.goodsList;
+          var totalPrice = that.data.totalPrice;
+          var index = e.target.dataset.index;
+          goodsList[index].counts++;
+          totalPrice += goodsList[index].price;
+          that.setData({
+            goodsList: goodsList,
+            totalPrice: totalPrice
+          })
+        }
+      }
+    })
+  },
+  bindMinusIcon: function(e){
+    var cartId = e.currentTarget.dataset.id;
+    var that = this;
+    wx.request({
+      url: hostString + '/intranet/cart/updateNumber',
+      data: {type: 2, cartId: cartId},
+      method: 'POST',
+      success: function(res) {
+        if(res.statusCode == 200){
+          var goodsList = that.data.goodsList;
+          var totalPrice = that.data.totalPrice;
+          var index = e.target.dataset.index;
+          goodsList[index].counts--;
+          totalPrice -= goodsList[index].price;
+          that.setData({
+            goodsList: goodsList,
+            totalPrice: totalPrice
+          })
+        }
+      }
+    })
+  },
+  bindDelIcon: function(e){
+    var goodsAttrId = e.currentTarget.dataset.id;
+    var that = this;
+    wx.request({
+      url: hostString + '/intranet/cart/deleteOneCartGoods',
+      data: {createBy: userInfo.id, goodsAttrId: goodsAttrId},
+      success: function(res) {
+        if(res.statusCode == 200){
+          var goodsList = that.data.goodsList;
+          var index = e.target.dataset.index;
+          goodsList.splice(index, 1);
+          that.setData({
+            goodsList: goodsList
+          })
+          that.count();
+        }
+      }
+    })
+  },
+  toPay: function(){
+    var that = this;
+    var goodsList = that.data.goodsList;
+    var ids = [];
+    for(var i=0; i<goodsList.length; i++){
+      if(goodsList[i].selected){
+        ids.push(goodsList[i].id);
+      }
+    }
+    if(ids.length > 0){
+      wx.navigateTo({
+        url: '../pay/pay?oper=2&ids='+ids,
+      })
+    }
   },
   bindToIndex: function(){
     wx.switchTab({
       url: '../index/index',
     })
   },
-  bindToDetail: function(){
+  bindToDetail: function(e){
+    var goodsId = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: '../goodsDetail/goodsDetail',
-    })
-  },
-  bindToPay: function(){
-    wx.navigateTo({
-      url: '../pay/pay',
+      url: '../goodsDetail/goodsDetail?goodsId='+goodsId,
     })
   }
 })

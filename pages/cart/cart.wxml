@@ -6,32 +6,38 @@
     </view>
 
     <view class="goods-list" wx:else>
-        <block wx:for="{{goodsList}}">
+        <block wx:for="{{goodsList}}" wx:key="goodsList">
             <view class="goods-item">
-                <image class="checkbox-icon" src="{{item.selected == 1 ? selectedCheckboxIcon : checkboxIcon}}" data-index="{{index}}" bindtap="bindCheckbox"></image>
-                <image class="goods-pic" src="{{item.picUrl}}"/>
-                <view class="goods-des" bindtap="bindToDetail" data-mainView="2">
-                    <text>{{item.name}}</text>
-                    <text>{{item.tag}}</text>
-                    <text>￥ {{item.price}}</text>
+                <view class="checkbox-icon">
+                  <image src="{{item.selected? selectedCheckboxIcon : checkboxIcon}}" data-index="{{index}}" bindtap="bindCheckbox" wx:if="{{item.goodsAttr.goods.isPutaway}}"></image>
+                  <text class="checkbox-icon" wx:if="{{!item.goodsAttr.goods.isPutaway}}"></text>
                 </view>
-                <view class="goods-num">
-                    <image class="minus-icon" src="{{minusIcon}}" data-index="{{index}}" bindtap="bindMinusIcon"/>
-                    <text class="number">{{item.num}}</text>
-                    <image class="add-icon" src="{{addIcon}}" data-index="{{index}}" bindtap="bindAddIcon"></image>
+                <image class="goods-pic" src="{{item.goodsAttr.goods.goodsImgs[0].image.imgName}}"/>
+                <view data-id="{{item.goodsAttr.goods.id}}" class="goods-des" bindtap="bindToDetail" data-mainView="2">
+                    <view>
+                        <view>{{item.goodsAttr.goods.goodsName}}</view>
+                        <view class="goods-attr">{{item.goodsAttr.attrValue}}</view>
+                    </view>
+                    <text class="goods-price">￥ {{item.goodsAttr.sellPrice}}</text>
                 </view>
-                <image class="del-icon" src="{{deleteIcon}}" data-index="{{index}}" bindtap="bindDelIcon"/>
+                <view class="goods-num" wx:if="{{item.goodsAttr.goods.isPutaway}}">
+                    <image data-id="{{item.id}}" class="minus-icon" wx:if="{{item.counts > 1}}" src="{{minusIcon}}" data-index="{{index}}" bindtap="bindMinusIcon"/>
+                    <text class="number">{{item.counts}}</text>
+                    <image data-id="{{item.id}}" class="add-icon" src="{{addIcon}}" data-index="{{index}}" bindtap="bindAddIcon"></image>
+                </view>
+                <view class="goods-num goods-price" wx:if="{{!item.goodsAttr.goods.isPutaway}}">该商品已下架</view>
+                <image data-id="{{item.goodsAttr.id}}" class="del-icon" src="{{deleteIcon}}" data-index="{{index}}" bindtap="bindDelIcon"/>
             </view>
         </block>
 
         <view class="menu-bar">
             <view class="select-all">
-                <image class="checkbox-icon" src="{{selectedAllStatus == 1 ? selectedCheckboxIcon : checkboxIcon}}" data-index="{{index}}" bindtap="bindSelectAll"></image> 全选
+                <image class="checkbox-icon" src="{{selectedAllStatus? selectedCheckboxIcon : checkboxIcon}}" data-index="{{index}}" bindtap="bindSelectAll"></image> 全选
             </view>
             <view>
-                合计: ￥ {{totalPrice}}  
+                合计: <text class="goods-price">{{totalPrice}}</text>  
             </view> 
-            <button type="warn" bindtap="bindToPay">结算</button>
+            <button type="warn" class="{{allowPay ? '' : 'grey-bg'}}" bindtap="toPay">结算</button>
         </view>
     </view>
 </view>

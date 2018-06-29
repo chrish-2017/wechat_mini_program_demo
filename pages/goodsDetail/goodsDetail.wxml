@@ -1,7 +1,7 @@
 <view class="container">
   <view class="carousel">
-    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-      <block wx:for="{{carouselImages}}">
+    <swiper indicator-dots="true" indicator-active-color="#fff" autoplay="true" interval="5000" duration="1000">
+      <block wx:for="{{carouselImages}}" wx:key="carouselImages">
         <swiper-item>
           <image src="{{item}}" class="carousel-image" width="355" height="150"/>
         </swiper-item>
@@ -10,54 +10,47 @@
   </view>
 
   <view class="goods-info">
-    <text class="goods-name">{{goods.name}}</text>
-    <text class="goods-price">￥{{goods.price}}</text>
-    <text class="goods-tag">{{goods.tag}}</text>
+    <view class="goods-name">{{goodsInfo.goodsName}}</view>
+    <view class="goods-tag">{{goodsInfo.goodsTitle}}</view>
+    <view class="goods-price">￥{{goodsInfo.goodsAttrs[0].sellPrice}}</view>
   </view>
 
-  <view class="choose-type" bindtap="bindShowLayer">
+  <!-- <view class="choose-type" bindtap="bindShowLayer">
     <text>{{chooseTips}}</text>
     <image class="right-icon" src="{{rightIcon}}"></image>
-  </view>
+  </view> -->
 
   <view class="choose-detail" hidden="{{!showLayer}}" animation="{{animationData}}">
       <view class="goods-pic">
-          <image src="{{goods.picUrl}}"></image>
+          <block wx:for="{{goodsInfo.goodsImgs}}" wx:key="goodsImgs">
+              <image wx:if="{{item.imageType == 3}}" src="{{item.image.imgName}}"></image>
+          </block>
       </view>
       <view class="goods-stock">
-          <text>￥{{goods.price}}</text>
-          <text>库存{{goods.stock}}件</text>
+          <text class="price">￥{{goodsInfo.goodsAttrs[choosed].sellPrice}}</text>
+          <text class="stock">库存{{goodsInfo.goodsAttrs[choosed].inventory.inventoryAmount}}件</text>
       </view>
       <image class="close-icon" src="{{closeIcon}}" bindtap="bindCloseIcon"></image>
       <form bindsubmit="typeFormSubmit">
         <view class="type-item">
-            <text>颜色</text>
             <view class="type-content">
-                <block wx:for="{{colorArray}}">
-                    <text data-color="{{index}}" class="{{choosedColor == index ? 'choosed':''}}" bindtap="bindChooseType">{{colorArray[index]}}</text>
+                <block wx:for="{{goodsAttrs}}" wx:key="goodsAttrs">
+                    <text data-choosed="{{index}}" class="{{choosed == index ? 'choosed':''}}" bindtap="bindChooseType">{{item.attrValue}}</text>
                 </block>
             </view>
-            <input name="color" hidden value="{{colorArray[choosedColor]}}"/>
-        </view>
-        <view class="type-item">
-            <text>尺寸</text>
-            <view class="type-content">
-                <block wx:for="{{sizeArray}}">
-                    <text data-size="{{index}}" class="{{choosedSize == index ? 'choosed':''}}" bindtap="bindChooseType">{{sizeArray[index]}}</text>
-                </block>
-            </view>
-            <input name="size" hidden value="{{sizeArray[choosedSize]}}"/>
+            <input name="goodsAttrId" hidden value="{{goodsAttrs[choosed].id}}"/>
         </view>
         <view class="choose-number">
             <text>数量</text>
             <view class="goods-num">
-                <image class="minus-icon" src="{{minusIcon}}" bindtap="bindMinusIcon"/>
-                <text class="number">{{num}}</text>
+                <image class="minus-icon" wx:if="{{counts > 1}}" src="{{minusIcon}}" bindtap="bindMinusIcon"/>
+                <text class="number">{{counts}}</text>
                 <image class="add-icon" src="{{addIcon}}" bindtap="bindAddIcon" ></image>
             </view>
-            <input name="number" hidden value="{{num}}"/>
+            <input name="counts" hidden value="{{counts}}"/>
         </view>
-        <button type="warn" form-type="submit">确认</button>
+        <view class="close-tip" wx:if="{{goodsAttrs[choosed].orderClose}}">该商品已过期，不能购买</view>
+        <button wx:if="{{!goodsAttrs[choosed].orderClose}}" type="warn" form-type="submit">确认</button>
       </form>
   </view>
 
@@ -70,20 +63,35 @@
         <view class="nav-item {{mainView == 3 ? 'nav-item-active' : ''}}" data-view="3" bindtap="bindNavItem">品牌描述</view>
     </view>
     <view class="content">
-        <view wx:if="{{mainView == 1}}">1</view>
-        <view wx:if="{{mainView == 2}}">2</view>
-        <view wx:if="{{mainView == 3}}">3</view>
+        <view wx:if="{{mainView == 1}}" class="detail">
+            <import src="../../wxParse/wxParse.wxml"/>
+            <template is="wxParse" data="{{wxParseData:description.nodes}}"/>
+        </view>
+        <view wx:if="{{mainView == 2}}" class="specifications">
+            <block wx:for="{{goodsInfo.specificationsModel}}" wx:key="specificationsModel">
+              <view class="specification">{{item}}</view>
+            </block>
+        </view>
+        <view wx:if="{{mainView == 2}}" class="brand">
+            <image class="brand-image" src="{{brandImage}}"></image>
+            <view class="brand-info">
+                <text>{{goodsInfo.brand}}</text>
+                <text class="brand-des">{{goodsInfo.brandDescription}}</text>
+            </view>
+        </view>
     </view>
   </view>
 
-  <view class="menu-bar">
-    <view bindtap="bindContactIcon">
+  <view class="menu-bar" wx:if="{{goodsInfo.isPutaway}}">
+    <view>
         <image src="{{contactIcon}}"></image>
     </view>
-    <view bindtap="bindCartIcon">
+    <view bindtap="toCart">
         <image src="{{cartIcon}}"></image>
     </view>
-    <view class="deep-blue-bg" bindtap="bindAddCart">加入购物车</view>
-    <view class="red-bg" bindtap="bindToPay">立即购买</view>
+    <view data-oper="1" class="deep-blue-bg" bindtap="bindShowLayer">加入购物车</view>
+    <view data-oper="2" class="red-bg" bindtap="bindShowLayer">立即购买</view>
   </view>
+
+  <view class="putaway-tip" wx:if="{{!goodsInfo.isPutaway}}">该商品已下架</view>
 </view>

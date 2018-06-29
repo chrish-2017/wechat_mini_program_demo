@@ -1,27 +1,27 @@
 <view class="container">
-    <view class="addr-info" bindtap="bindShowLayer">
+    <view class="addr-info" bindtap="chooseAddr">
         <text>{{chooseTips}}</text>
         <image class="right-icon" src="{{rightIcon}}"></image>
     </view>
 
     <view class="choose-detail" hidden="{{!showLayer}}" animation="{{animationData}}"> 
         <form bindsubmit="addrFormSubmit">
-            <block wx:for="{{addrList}}">
+            <block wx:for="{{addrList}}" wx:key="addrList">
                 <view class="addr-item">
-                    <image class="checkbox-icon" src="{{item.check == 1 ? selectedCheckboxIcon : checkboxIcon}}" data-index="{{index}}" bindtap="bindCheckbox"></image>
+                    <image class="checkbox-icon" src="{{item.check ? selectedCheckboxIcon : checkboxIcon}}" data-index="{{index}}" bindtap="bindCheckbox"></image>
                     <view class="addr-info">
                         <view>
-                            <text>{{item.name}}</text>
-                            <text>{{item.number}}</text>
+                            <text>{{item.fullName}}</text>
+                            <text>   {{item.phone}}</text>
                         </view>
-                        <view>{{item.addr}}</view>
+                        <view class="addr-detail">{{item.province}}{{item.city}}{{item.county}}{{item.detailedAddress}}</view>
                     </view>
-                    <image class="edit-icon" src="{{editIcon}}" bindtap="bindToAddr"></image>
+                    <image data-id="{{item.id}}" class="edit-icon" src="{{editIcon}}" bindtap="toAddr"></image>
                 </view>
-                <block wx:if="{{item.check == 1}}">
-                    <input hidden name="name" value="{{item.name}}" />
-                    <input hidden name="number" value="{{item.number}}" />
-                    <input hidden name="addr" value="{{item.addr}}" />
+                <block wx:if="{{item.check}}">
+                    <input hidden name="name" value="{{item.fullName}}" />
+                    <input hidden name="number" value="{{item.phone}}" />
+                    <input hidden name="addr" value="{{item.province}}{{item.city}}{{item.county}}{{item.detailedAddress}}" />
                 </block>
             </block>
             <button  type="warn" form-type="submit">确认</button>
@@ -30,32 +30,32 @@
     <view class="choose-detail-shadow" hidden="{{!showLayer}}" animation="{{animationShadowData}}"></view>
 
     <view class="order-list">
-        <block wx:for="{{orderList}}">
+        <block wx:for="{{orderList}}" wx:key="orderList">
             <view class="order-item">
                 <view class="order-detail">
-                    <image src="{{item.picUrl}}"/>
+                    <image src="{{item.goodsAttr.goods.goodsImgs[0].image.imgName}}"/>
                     <view class="order-des">
-                        <view bindtap="bindToDetail">{{item.name}}</view>
-                        <text>{{item.tag}}</text>
-                        <view class="number">
-                            <text>￥{{item.price}}</text>
-                            <text>×{{item.num}}</text>
+                        <view>{{item.goodsAttr.goods.goodsName}}</view>
+                        <text class="grey">{{item.goodsAttr.attrValue}}</text>
+                        <view class="number red">
+                            <text>￥{{item.goodsAttr.sellPrice}}</text>
+                            <text>×{{item.counts}}</text>
                         </view>
                     </view>
                 </view>
-                <view class="order-total">
-                    <text>共计{{num}}件商品 合计：￥{{totalPrice}}</text>
-                </view>
-                <view class="order-all">
-                    <text>运费</text>
-                    <text>￥12.00</text>
-                </view>
             </view>
         </block>
+        <view class="order-fare">
+            <text>共计{{payInfo.totalCounts}}件商品 小计：{{payInfo.totalPrice}}</text>
+        </view>
+        <view class="order-total">
+            <text>运费</text>
+            <text>{{payInfo.freight}}</text>
+        </view>
     </view>
 
     <view class="menu-bar">
-        <text class="select-all">合计: ￥{{totalPrice}}</text>
-        <button type="warn" bindtap="bindPay">支付</button>
+        <text class="select-all">合计: <text class="red">{{payInfo.totalPrice + payInfo.freight}}</text></text>
+        <button type="warn" bindtap="bindPay">微信支付</button>
     </view>
 </view>
