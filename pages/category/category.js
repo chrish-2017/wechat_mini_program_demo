@@ -1,20 +1,23 @@
 var app = getApp()
-var hostString = app.globalData.hostString
 Page({
   data: {
     
   },
   onLoad: function(){
+    var globalData = app.getGlobalData()
+    this.setData({
+      hostString: globalData.hostString,
+      userInfo: globalData.userInfo
+    });
     var that = this;
     wx.request({
-      url: hostString + '/intranet/goodsType/getAllTypeList',
+      url: this.data.hostString + '/intranet/goodsType/getAllTypeList',
       success: function(res) {
         console.log("goodstype==");
         console.log(res);
         var goodsInfo = res.data.records;
         that.setData({
-          goodsInfo:goodsInfo,
-          hostString:hostString
+          goodsInfo:goodsInfo
         });    
       }
     })

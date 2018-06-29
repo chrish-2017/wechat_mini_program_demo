@@ -1,6 +1,4 @@
 var app = getApp()
-var hostString = app.globalData.hostString
-var userInfo = app.globalData.userInfo
 Page({
   data: {
     checkboxIcon:'../../images/checkbox.png',
@@ -12,12 +10,16 @@ Page({
     reasonArray: ["质量问题", "材质、面料与商品描述不符", "大小尺寸与商品描述不符", "尺寸拍错/不喜欢/效果不好", "假冒品牌", "少件/商品破损/有污渍", "剪裁/做工瑕疵", "颜色/款式/图案与描述不符", "卖家发错货", "其他"]
   },
   onLoad: function(e){
+    var globalData = app.getGlobalData()
+    this.setData({
+      hostString: globalData.hostString,
+      userInfo: globalData.userInfo
+    });
     var orderId = e.orderId;
     var mainView = e.mainView;
-
     var that = this;
     wx.request({
-      url: hostString + '/intranet/address/get',
+      url: this.data.hostString + '/intranet/address/get',
       data: { id: 1 },
       success: function (res) {
         console.log("address==");
@@ -28,19 +30,17 @@ Page({
       }
     });
     wx.request({
-      url: hostString + '/intranet/express/getAll',
+      url: this.data.hostString + '/intranet/express/getAll',
       success: function (res) {
         console.log("express==");
         console.log(res);
         that.setData({
-          orderId: orderId || '',
-          mainView: mainView || 1,
+          orderId: orderId,
+          mainView: mainView,
           status: 1,
           choosedReason: -1,
           choosedCompany: -1,
-          companyArray: res.data.o,
-          hostString: hostString,
-          userInfo: userInfo
+          companyArray: res.data.o
         });
       }
     });
@@ -66,7 +66,7 @@ Page({
     var data = e.detail.value;
     var that = this;
     /*wx.request({
-      url: hostString + '/intranet/returnorder/applyReturn',
+      url: this.data.hostString + '/intranet/returnorder/applyReturn',
       data: data,
       method: 'POST',
       header: {
@@ -103,7 +103,7 @@ Page({
     var data = e.detail.value;
     var that = this;
     /*wx.request({
-      url: hostString + '/intranet/returnorder/writeExpress',
+      url: this.data.hostString + '/intranet/returnorder/writeExpress',
       data: data,
       method: 'POST',
       header: {

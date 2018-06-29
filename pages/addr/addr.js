@@ -1,7 +1,5 @@
 var util = require('../../utils/util.js');
 var app = getApp()
-var hostString = app.globalData.hostString
-var userInfo = app.globalData.userInfo
 Page({
   data: { 
     address: {
@@ -14,11 +12,16 @@ Page({
     selectedCheckboxIcon:'../../images/selectedCheckbox.png'
   },
   onLoad: function(e){
+    var globalData = app.getGlobalData()
+    this.setData({
+      hostString: globalData.hostString,
+      userInfo: globalData.userInfo
+    });
     var addressId = e.addressId;
     var that = this;
     if(addressId > 0){
       wx.request({
-        url: hostString + '/intranet/address/get',
+        url: this.data.hostString + '/intranet/address/get',
         data: {id: addressId},
         success: function(res) {
           console.log("address==");
@@ -39,13 +42,11 @@ Page({
       var address = that.data.address;
       var proArray = data;
       var cityArray = proArray[address.proIndex].sub;
-      var areaArray = cityArray[address.cityIndex].sub || [];
+      var areaArray = cityArray[address.cityIndex].sub;
       that.setData({
         proArray: proArray,
         cityArray: cityArray,
-        areaArray: areaArray,
-        hostString: hostString,
-        userInfo: userInfo
+        areaArray: areaArray || []
       });
     });
   },
@@ -114,7 +115,7 @@ Page({
       oper = 'update';
     }
     /*wx.request({
-      url: hostString + '/intranet/address/'+oper,
+      url: this.data.hostString + '/intranet/address/'+oper,
       data: data,
       method: 'POST',
       header: {

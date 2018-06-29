@@ -1,6 +1,4 @@
 var app = getApp()
-var hostString = app.globalData.hostString
-var userInfo = app.globalData.userInfo
 Page({
   data: {
     mainView: 1,
@@ -12,14 +10,11 @@ Page({
     stateArray: ["", "待付款", "订单已取消", "待发货", "已发货", "交易成功", "已申请退款", "部分发货", "", "", "", "", "已申请退款", "店铺允许退货", "退款成功", "已退货", "再次发货", "退货成功", "退款成功", "退货中"]
   },
   onLoad: function () {
-    var that = this;
-    //调用应用实例的方法获取全局数据
-    app.getUserInfo(function (userInfo) {
-      //更新数据
-      that.setData({
-        userInfo: userInfo
-      })
-    })
+    var globalData = app.getGlobalData()
+    this.setData({
+      hostString: globalData.hostString,
+      userInfo: globalData.userInfo
+    });
     this.init();
   },
   onShow: function () {
@@ -28,8 +23,8 @@ Page({
   init: function(){
     var that = this;
     wx.request({
-      url: hostString + '/intranet/order/getMyOrder',
-      data: {userId: userInfo.id},
+      url: this.data.hostString + '/intranet/order/getMyOrder',
+      data: {userId: this.data.userInfo.id},
       success: function(res) {
         console.log("myOrder==");
         console.log(res);
@@ -38,14 +33,13 @@ Page({
           records = res.data.o.records;
         }
         that.setData({
-          records: records,
-          hostString: hostString
+          records: records
         });
       }
     });
     wx.request({
-      url: hostString + '/intranet/address/getAll',
-      data: {userId: userInfo.id},
+      url: this.data.hostString + '/intranet/address/getAll',
+      data: {userId: this.data.userInfo.id},
       success: function(res) {
         console.log("address==");
         console.log(res);
@@ -76,8 +70,8 @@ Page({
     var numberNo = e.currentTarget.dataset.id;
     var that = this;
     wx.request({
-      url: hostString + '/intranet/order/cancelOrder',
-      data: { numberNo: numberNo, userId: userInfo.id },
+      url: this.data.hostString + '/intranet/order/cancelOrder',
+      data: { numberNo: numberNo, userId: this.data.userInfo.id },
       method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded'
@@ -113,8 +107,8 @@ Page({
     console.log(addressId);
     var that = this;
     wx.request({
-      url: hostString + '/intranet/address/delete',
-      data: {userId:userInfo.id, addressId:addressId},
+      url: this.data.hostString + '/intranet/address/delete',
+      data: {userId:this.data.userInfo.id, addressId:addressId},
       method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded'

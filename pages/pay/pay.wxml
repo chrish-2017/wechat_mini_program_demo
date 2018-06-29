@@ -19,6 +19,7 @@
                     <image data-id="{{item.id}}" class="edit-icon" src="{{editIcon}}" bindtap="toAddr"></image>
                 </view>
                 <block wx:if="{{item.check}}">
+                    <input hidden name="id" value="{{item.id}}" />
                     <input hidden name="name" value="{{item.fullName}}" />
                     <input hidden name="number" value="{{item.phone}}" />
                     <input hidden name="addr" value="{{item.province}}{{item.city}}{{item.county}}{{item.detailedAddress}}" />

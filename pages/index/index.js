@@ -1,15 +1,19 @@
 //index.js
 //获取应用实例
 var app = getApp()
-var hostString = app.globalData.hostString
 Page({
   data: {
     
   },
   onLoad: function(){
+    var globalData = app.getGlobalData()
+    this.setData({
+      hostString: globalData.hostString,
+      userInfo: globalData.userInfo
+    });
     var that = this;
     wx.request({
-      url: hostString + '/intranet/homepage/getListByPage',
+      url: this.data.hostString + '/intranet/homepage/getListByPage',
       success: function(res) {
         console.log("homepage==");
         console.log(res);
@@ -41,13 +45,12 @@ Page({
         }
         that.setData({
           carouselImages:carouselImages,
-          categoryInfos:categoryInfos,
-          hostString:hostString
+          categoryInfos:categoryInfos
         });      
       }
     })
     wx.request({
-      url: hostString + '/intranet/homepage/getGoodsNoListByPage',
+      url: this.data.hostString + '/intranet/homepage/getGoodsNoListByPage',
       success: function(res) {
         console.log("goodsList==");
         console.log(res);

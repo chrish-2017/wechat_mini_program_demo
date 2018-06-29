@@ -1,16 +1,20 @@
 var app = getApp()
-var hostString = app.globalData.hostString
 Page({
   data: {
     goodsIcon:'../../images/goods.jpg',
     stateArray:["运输中", "已签收"]
   },
   onLoad: function(e){
+    var globalData = app.getGlobalData()
+    this.setData({
+      hostString: globalData.hostString,
+      userInfo: globalData.userInfo
+    });
     var id = e.id;
     var transportNo = e.transportNo;
     var that = this;
     wx.request({
-      url: hostString + '/intranet/express/searchExpress',
+      url: this.data.hostString + '/intranet/express/searchExpress',
       data: { id: id, transportNo: transportNo},
       method: 'POST',
       header: {

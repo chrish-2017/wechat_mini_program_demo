@@ -72,7 +72,7 @@
               <view class="specification">{{item}}</view>
             </block>
         </view>
-        <view wx:if="{{mainView == 2}}" class="brand">
+        <view wx:if="{{mainView == 3}}" class="brand">
             <image class="brand-image" src="{{brandImage}}"></image>
             <view class="brand-info">
                 <text>{{goodsInfo.brand}}</text>

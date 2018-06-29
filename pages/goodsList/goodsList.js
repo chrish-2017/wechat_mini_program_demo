@@ -1,38 +1,40 @@
 var app = getApp()
-var hostString = app.globalData.hostString
 Page({
   data: {
     
   },
   onLoad: function(e){
+    var globalData = app.getGlobalData()
+    this.setData({
+      hostString: globalData.hostString,
+      userInfo: globalData.userInfo
+    });
     var parentTypeId = e.parentTypeId;
     var goodsTypeId = e.goodsTypeId;
     var that = this;
     if(parentTypeId > 0){
       wx.request({
-        url: hostString + '/intranet/goods/getChildrenType',
+        url: this.data.hostString + '/intranet/goods/getChildrenType',
         data: { goodsTypeId: parentTypeId },
         success: function (res) {
           console.log("goods==");
           console.log(res);
           var goodsList = res.data.records;
           that.setData({
-            goodsList: goodsList,
-            hostString: hostString
+            goodsList: goodsList
           });
         }
       })
     }else{
       wx.request({
-        url: hostString + '/intranet/goods/getListByPage',
+        url: this.data.hostString + '/intranet/goods/getListByPage',
         data: { goodsTypeId: goodsTypeId },
         success: function (res) {
           console.log("goods==");
           console.log(res);
           var goodsList = res.data.o.records;
           that.setData({
-            goodsList: goodsList,
-            hostString: hostString
+            goodsList: goodsList
           });
         }
       })

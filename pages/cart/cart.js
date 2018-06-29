@@ -1,6 +1,4 @@
 var app = getApp()
-var hostString = app.globalData.hostString
-var userInfo = app.globalData.userInfo
 Page({
   data: {
     checkboxIcon:'../../images/checkbox.png',
@@ -10,6 +8,11 @@ Page({
     deleteIcon:'../../images/delete.png'
   },
   onLoad: function(){
+    var globalData = app.getGlobalData()
+    this.setData({
+      hostString: globalData.hostString,
+      userInfo: globalData.userInfo
+    });
     this.init();
   },
   onShow: function () {
@@ -18,8 +21,8 @@ Page({
   init: function(){
     var that = this;
     wx.request({
-      url: hostString + '/intranet/cart/getAllCart',
-      data: { createBy: userInfo.id },
+      url: this.data.hostString + '/intranet/cart/getAllCart',
+      data: { createBy: this.data.userInfo.id },
       success: function (res) {
         console.log("myCart==");
         console.log(res);
@@ -30,8 +33,7 @@ Page({
           }
         }
         that.setData({
-          goodsList: goodsList,
-          hostString: hostString
+          goodsList: goodsList
         });
         that.count();
       }
@@ -86,7 +88,7 @@ Page({
     var cartId = e.currentTarget.dataset.id;
     var that = this;
     wx.request({
-      url: hostString + '/intranet/cart/updateNumber',
+      url: this.data.hostString + '/intranet/cart/updateNumber',
       data: {type: 1, cartId: cartId},
       method: 'POST',
       success: function(res) {
@@ -108,7 +110,7 @@ Page({
     var cartId = e.currentTarget.dataset.id;
     var that = this;
     wx.request({
-      url: hostString + '/intranet/cart/updateNumber',
+      url: this.data.hostString + '/intranet/cart/updateNumber',
       data: {type: 2, cartId: cartId},
       method: 'POST',
       success: function(res) {
@@ -130,8 +132,8 @@ Page({
     var goodsAttrId = e.currentTarget.dataset.id;
     var that = this;
     wx.request({
-      url: hostString + '/intranet/cart/deleteOneCartGoods',
-      data: {createBy: userInfo.id, goodsAttrId: goodsAttrId},
+      url: this.data.hostString + '/intranet/cart/deleteOneCartGoods',
+      data: { createBy: this.data.userInfo.id, goodsAttrId: goodsAttrId},
       success: function(res) {
         if(res.statusCode == 200){
           var goodsList = that.data.goodsList;

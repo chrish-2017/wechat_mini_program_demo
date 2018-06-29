@@ -1,12 +1,8 @@
 var WxParse = require('../../wxParse/wxParse.js')
 var util = require("../../utils/util.js")
 var app = getApp()
-var hostString = app.globalData.hostString
-var userInfo = app.globalData.userInfo
 Page({
-  data: {
-    chooseTips: '请选择规格/数量',
-    rightIcon: '../../images/right.png',   
+  data: {   
     contactIcon:'../../images/Customerservice.png',
     cartIcon:'../../images/productCart.png',
     closeIcon:'../../images/close.png', 
@@ -17,10 +13,15 @@ Page({
     counts:1
   },
   onLoad: function(e){
+    var globalData = app.getGlobalData()
+    this.setData({
+      hostString: globalData.hostString,
+      userInfo: globalData.userInfo
+    });
     var goodsId = e.goodsId;
     var that = this;
     wx.request({
-      url: hostString + '/intranet/goods/get',
+      url: this.data.hostString + '/intranet/goods/get',
       data: {goodsId: goodsId},
       success: function(res) {
         console.log("goods==");
@@ -54,8 +55,7 @@ Page({
           carouselImages:carouselImages,
           goodsInfo:goodsInfo,
           goodsAttrs:goodsAttrs,
-          brandImage:brandImage,
-          hostString:hostString
+          brandImage:brandImage
         });    
       }
     })
@@ -102,8 +102,8 @@ Page({
     var oper = this.data.oper;
     var data = e.detail.value;
     /*wx.request({
-      url: hostString + '/intranet/cart/addGoodsAttr',
-      data: {userId: userInfo.id, goodsAttrId: data.goodsAttrId, counts: data.counts},
+      url: this.data.hostString + '/intranet/cart/addGoodsAttr',
+      data: {userId: this.data.userInfo.id, goodsAttrId: data.goodsAttrId, counts: data.counts},
       method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded'

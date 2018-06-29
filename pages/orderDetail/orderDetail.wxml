@@ -47,7 +47,7 @@
         </view>
         <view class="menu-bar bottom-bar" wx:if="{{orderList.state == 1}}">
             <button data-id="{{orderList.orderNo}}" type="warn" class="white-bg" bindtap="cancelOrder">取消订单</button>
-            <button type="warn" bindtap="">付款</button>
+            <button data-id="{{orderList.orderNo}}" type="warn" bindtap="doPay">付款</button>
         </view>
     </view>
 </view>
