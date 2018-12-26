@@ -1,6 +1,6 @@
 {
   "pages":[
-    
+    "pages/vant/vant",
     "pages/index/index",
     "pages/category/category",
     "pages/goodsList/goodsList",
@@ -12,6 +12,8 @@
     "pages/transInfo/transInfo",
     "pages/refund/refund",
     "pages/addr/addr",
+    "pages/loadInfo/loadInfo",
+    "pages/loadInformation/loadInformation",
     "pages/test/test"
   ],
   "window":{
